@@ -65,7 +65,7 @@ public class FileRepository {
                     }
                 }
                 sick++;
-                if(sick == offset+numRows-1)
+                if(sick == offset+numRows)
                     break;
             }
             // Chiusura della connessione e del reader
@@ -142,7 +142,7 @@ public class FileRepository {
                         if(sick >= offset)
                             statement.executeUpdate(insertUpdate1);
                         statement.executeUpdate(insertUpdate2);
-                        if(sick == offset+numRows-1)
+                        if(sick == offset+numRows)
                             break;
                     }
                 }
@@ -212,7 +212,7 @@ public class FileRepository {
                     else {
                         if(sick >= offset)
                             statement.executeUpdate(insertUpdate);
-                        if(sick == offset+numRows-1)
+                        if(sick == offset+numRows)
                             break;
                     }
                 }
@@ -283,7 +283,7 @@ public class FileRepository {
                     else {
                         if(sick >= offset)
                             statement.executeUpdate(insertUpdate);
-                        if(sick == offset+numRows-1)
+                        if(sick == offset+numRows)
                             break;
                     }
                     statement.executeUpdate(insertUpdate);

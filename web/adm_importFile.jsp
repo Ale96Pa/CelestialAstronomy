@@ -16,22 +16,24 @@
 <%
     if(request.getParameter("import")!= null){
         if(csvFileBean.getFilename() != null){
-            int num = FileController.importFile(csvFileBean);
-            if(num < 0){
-%>          <I><U><h3>
-            <span style="color: red; "> Failure on import file: no element update or insert.
-                Maybe you violated foreign key constraint(if you insert filament's segments or perimeter but filament
-                isn't in DB)
-            </span>
-            </h3></U></I> <%
+            if(csvFileBean.getNumrows()<0 || csvFileBean.getOffset()<0){
+                %><I><U><h3>
+                <span style="color: red; "> Insert valid number of rows and offset! </span>
+                </h3></U></I> <%
             }
-            else if(csvFileBean.getNumrows()<0 || csvFileBean.getOffset()<0){
-%>          <I><U><h3>
-            <span style="color: red; "> Insert valid number of rows and offset! </span>
-            </h3></U></I> <%
-            } else {
-                System.out.println(csvFileBean.getNumrows() + "  " + csvFileBean.getOffset());
-%>          <jsp:forward page="adm_registrationDONE.jsp" /> <%
+            else{
+                int num = FileController.importFile(csvFileBean);
+                if(num < 0){
+                    %><I><U><h3>
+                    <span style="color: red; "> Failure on import file: no element update or insert.
+                        Maybe you violated foreign key constraint(if you insert filament's segments or perimeter but
+                        filament isn't in DB)
+                    </span>
+                    </h3></U></I> <%
+                } else {
+                    System.out.println(csvFileBean.getNumrows() +" " + csvFileBean.getOffset());
+                    %><jsp:forward page="adm_registrationDONE.jsp" /> <%
+                }
             }
         }
     }
