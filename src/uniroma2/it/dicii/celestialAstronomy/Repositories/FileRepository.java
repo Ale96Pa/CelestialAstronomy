@@ -1,5 +1,6 @@
 package uniroma2.it.dicii.celestialAstronomy.Repositories;
 
+import uniroma2.it.dicii.celestialAstronomy.Exception.ImportFileException;
 import uniroma2.it.dicii.celestialAstronomy.Exception.NoDataFoundException;
 import uniroma2.it.dicii.celestialAstronomy.Repositories.Utility.UtenteDao;
 import uniroma2.it.dicii.celestialAstronomy.View.CsvFileBean;
@@ -46,7 +47,7 @@ public class FileRepository {
                 // Insert of elements in database
                 if(esito!=0) {
                     if(!FilamentRepository.searchFilament(tuple[0]))
-                        throw new NoDataFoundException();
+                        throw new ImportFileException();
                     String insertUpdate =   " INSERT INTO strutturagalattica (filamento, longitudine, latitudine, tipo)"+
                                             " VALUES ('" + tuple[0] + "', '"+ tuple[1] +"', '"+ tuple[2] +"' , 'PER')" +
                                             " ON CONFLICT (filamento, longitudine, latitudine) DO UPDATE " +
@@ -60,7 +61,7 @@ public class FileRepository {
             br.close();
             connection.close();
             statement.close();
-        } catch (ClassNotFoundException | SQLException | IOException | NoDataFoundException e) {
+        } catch (ClassNotFoundException | SQLException | IOException | ImportFileException e) {
             e.printStackTrace();
             esito = 0;
         }
@@ -101,7 +102,7 @@ public class FileRepository {
                 // Insert of elements in database
                 if(esito!=0) {
                     if(!FilamentRepository.searchFilament(tuple[0]))
-                        throw new NoDataFoundException();
+                        throw new ImportFileException();
                     String insertUpdate1 =  "INSERT INTO strutturagalattica (filamento, longitudine, latitudine, tipo)"+
                                             " VALUES ('" + tuple[0] + "', '"+ tuple[3] +"', '"+ tuple[4] +"' , 'SEG')" +
                                             " ON CONFLICT (filamento, longitudine, latitudine) DO UPDATE " +
@@ -124,7 +125,7 @@ public class FileRepository {
             br.close();
             connection.close();
             statement.close();
-        } catch (ClassNotFoundException | SQLException | IOException | NoDataFoundException e) {
+        } catch (ClassNotFoundException | SQLException | IOException | ImportFileException e) {
             e.printStackTrace();
             esito = 0;
         }
@@ -253,7 +254,7 @@ public class FileRepository {
                             if (!CurrentFilamentID.equals(BeforeFilamentID)) {
                                 if ((abs(sumValue)) >= Math.toRadians(0.01)) {
                                     if(!FilamentRepository.searchFilament(BeforeFilamentID))
-                                        throw new NoDataFoundException();
+                                        throw new ImportFileException();
                                     String insertUpdateInclusione = "INSERT INTO inclusione (filamento, stella)" +
                                             " VALUES ('" + BeforeFilamentID + "', '" + tupleStar[0] + "')" +
                                             " ON CONFLICT (filamento, stella) DO UPDATE " +
@@ -282,7 +283,7 @@ public class FileRepository {
             brStar.close();
             connection.close();
             statement.close();
-        } catch (ClassNotFoundException | SQLException | IOException | NoDataFoundException e) {
+        } catch (ClassNotFoundException | SQLException | IOException | ImportFileException e) {
             e.printStackTrace();
             esitoInsert = -1;
         }
