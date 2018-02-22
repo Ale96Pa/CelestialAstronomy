@@ -31,7 +31,6 @@
                     </span>
                     </h3></U></I> <%
                 } else {
-                    System.out.println(csvFileBean.getNumrows() +" " + csvFileBean.getOffset());
                     %><jsp:forward page="adm_registrationDONE.jsp" /> <%
                 }
             }
