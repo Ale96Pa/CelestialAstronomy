@@ -63,8 +63,8 @@ public class R2_3_4_Administrator {
     @Test
     public void updateFile(){
         int control;
-        FileRepository.insertPerimeterFile(CsvFileBean.getAbsolutePath()+"test");
-        control = FileRepository.insertPerimeterFile(CsvFileBean.getAbsolutePath()+"testUpdated");
+        FileRepository.insertPerimeterFile(CsvFileBean.getAbsolutePath()+"test",0,0);
+        control = FileRepository.insertPerimeterFile(CsvFileBean.getAbsolutePath()+"testUpdated",0,0);
         Assert.assertNotEquals(control, 0);
     }
 
@@ -75,7 +75,7 @@ public class R2_3_4_Administrator {
     public void tryIrregularImport(){
         int control = 0;
         try{
-            control = FileRepository.insertPerimeterFile(CsvFileBean.getAbsolutePath()+"testWrong");
+            control = FileRepository.insertPerimeterFile(CsvFileBean.getAbsolutePath()+"testWrong",0 ,0);
             if(control != 3)
                 throw new WrongDataException();
         } catch (WrongDataException e){

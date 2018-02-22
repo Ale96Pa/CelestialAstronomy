@@ -3,9 +3,12 @@ package uniroma2.it.dicii.celestialAstronomy.View;
 public class CsvFileBean {
 
     // Attributi
+    private static final String absolutePath = "D:\\Alessandro\\Documents\\4.Programmi\\DataBase\\ProgettoDB\\Implementazione\\CelestialAstronomy\\src\\uniroma2\\it\\dicii\\celestialAstronomy\\Files\\";
+
     private String filename;
     private String type;
-    private static final String absolutePath = "D:\\Alessandro\\Documents\\4.Programmi\\DataBase\\ProgettoDB\\Implementazione\\CelestialAstronomy\\src\\uniroma2\\it\\dicii\\celestialAstronomy\\Files\\";
+    private int numrows;
+    private int offset;
 
     // Metodi bean
     public String getFilename() {
@@ -64,5 +67,21 @@ public class CsvFileBean {
 
     public static String getAbsolutePath() {
         return absolutePath;
+    }
+
+    public int getNumrows() {
+        return numrows;
+    }
+
+    public void setNumrows(int numrows) {
+        this.numrows = numrows;
+    }
+
+    public int getOffset() {
+        return offset;
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset;
     }
 }

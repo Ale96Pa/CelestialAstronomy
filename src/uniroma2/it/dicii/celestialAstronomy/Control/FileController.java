@@ -15,13 +15,13 @@ public class FileController {
         int elementsUpdated;
 
         switch (typeFile){
-            case "contorni": elementsUpdated = FileRepository.insertPerimeterFile(pathname);
+            case "contorni": elementsUpdated = FileRepository.insertPerimeterFile(pathname, bean.getNumrows(), bean.getOffset());
                 break;
-            case "scheletro": elementsUpdated = FileRepository.insertSkeletonFile(pathname);
+            case "scheletro": elementsUpdated = FileRepository.insertSkeletonFile(pathname, bean.getNumrows(), bean.getOffset());
                 break;
-            case "filamenti": elementsUpdated =  FileRepository.insertFilamentFile(pathname);
+            case "filamenti": elementsUpdated =  FileRepository.insertFilamentFile(pathname, bean.getNumrows(), bean.getOffset());
                 break;
-            case "stelle": elementsUpdated =  FileRepository.insertStarFile(pathname);
+            case "stelle": elementsUpdated =  FileRepository.insertStarFile(pathname, bean.getNumrows(), bean.getOffset());
                 break;
             default: elementsUpdated = 0;
         }

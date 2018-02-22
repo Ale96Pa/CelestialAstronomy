@@ -10,19 +10,27 @@
 <jsp:useBean id="csvFileBean" scope="request"  class="uniroma2.it.dicii.celestialAstronomy.View.CsvFileBean" />
 <!-- Mappa automaticamente tutti gli attributi dell'oggetto csvFileBean -->
 <jsp:setProperty name="csvFileBean" property="filename"/>
+<jsp:setProperty name="csvFileBean" property="numrows"/>
+<jsp:setProperty name="csvFileBean" property="offset"/>
 
 <%
     if(request.getParameter("import")!= null){
         if(csvFileBean.getFilename() != null){
             int num = FileController.importFile(csvFileBean);
             if(num < 0){
-%>          <I> <U> <h3>
+%>          <I><U><h3>
             <span style="color: red; "> Failure on import file: no element update or insert.
                 Maybe you violated foreign key constraint(if you insert filament's segments or perimeter but filament
                 isn't in DB)
             </span>
             </h3></U></I> <%
+            }
+            else if(csvFileBean.getNumrows()<0 || csvFileBean.getOffset()<0){
+%>          <I><U><h3>
+            <span style="color: red; "> Insert valid number of rows and offset! </span>
+            </h3></U></I> <%
             } else {
+                System.out.println(csvFileBean.getNumrows() + "  " + csvFileBean.getOffset());
 %>          <jsp:forward page="adm_registrationDONE.jsp" /> <%
             }
         }
@@ -56,7 +64,12 @@
             <option value="6"> Filament: SPITZER satellite</option>
             <option value="7"> Stars: HERSCHEL satellite</option>
         </select>
-
+        <br><br>
+        <label for="numrows">How many rows do you want import? <I>Insert ZERO (0) to add the whole file </I></label>
+        <input id="numrows" name="numrows" type="number">
+        <br><br>
+        <label for="offset">From which line you want to start importing? </label>
+        <input id="offset" name="offset" type="number">
         <br><br>
         <input name="import" type="submit" id="import" value="Import file" class="btn btn-info">
         <button name="back" id="back"> <a href="WelcomeAdministrator.jsp"> Come Back </a></button>
