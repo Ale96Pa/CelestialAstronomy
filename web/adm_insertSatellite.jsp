@@ -8,7 +8,7 @@
   Time: 11:12
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 
 <!-- Si dichiara la variabile userBean e istanzia un oggetto UserBean -->
 <jsp:useBean id="satelliteBean" scope="request"  class="uniroma2.it.dicii.celestialAstronomy.View.SatelliteBean" />
@@ -32,7 +32,7 @@
                 throw new AlreadyPresentException();
             }
             else {
-                %><jsp:forward page="registrationDONE.jsp" /> <%
+                %><jsp:forward page="adm_registrationDONE.jsp" /> <%
             }
         } catch (AlreadyPresentException | WrongDataException e){
             e.printStackTrace();
@@ -47,11 +47,11 @@
 </head>
 <body bgcolor="#f0f8ff">
 <p align="right">
-    <img src="logo.JPG" width="150" height="120" border="2" align="right"><h2><I> Satellite Area </I></h2>
+    <img src="Image/logo.JPG" width="150" height="120" border="2" align="right"><h2><I> Satellite Area </I></h2>
 <br><br><br><br><hr>
 <h3> Insert data of a new satellite </h3>
 <br>
-<form action="insertSatellite.jsp" method="get" id="satellite">
+<form action="adm_insertSatellite.jsp" method="get" id="satellite">
     <fieldset>
         <legend> Insert satellite : </legend>
         <label for="name"> Name: </label>

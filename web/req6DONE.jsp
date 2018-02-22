@@ -9,7 +9,7 @@
   Time: 12:29
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 
 <html>
 <head>
@@ -32,7 +32,7 @@
 </head>
 <body bgcolor="#f0f8ff">
 <p align="right">
-    <img src="logo.JPG" width="150" height="120" border="2" align="right"><h2><I> Search the filaments by ellipse and brillance </I></h2>
+    <img src="Image/logo.JPG" width="150" height="120" border="2" align="right"><h2><I> Search the filaments by ellipse and brillance </I></h2>
 <br><br><br><br><hr>
 <br>
 <h3> Page <% out.print(Integer.parseInt(request.getParameter("page"))+1); %> </h3>
@@ -66,15 +66,15 @@
             <th>Ellipse </th>
             <th>Contrast </th>
         </tr> <%
-        for(int i=0; i<filaments.size(); i++){
-            %><tr>
-                <td> <% out.print(filaments.get(i).getID()); %> </td>
-                <td> <% out.print(filaments.get(i).getName() ); %> </td>
-                <td> <% out.print(filaments.get(i).getTotalFlux()); %> </td>
-                <td> <% out.print(filaments.get(i).getDensity()); %> </td>
-                <td> <% out.print(filaments.get(i).getTemperature()); %> </td>
-                <td> <% out.print(filaments.get(i).getEllipse()); %> </td>
-                <td> <% out.print(filaments.get(i).getConstrast()); %> </td>
-            </tr>
+        for (Filament filament : filaments) {
+        %><tr>
+            <td><% out.print(filament.getID()); %></td>
+            <td><% out.print(filament.getName()); %></td>
+            <td><% out.print(filament.getTotalFlux()); %></td>
+            <td><% out.print(filament.getDensity()); %></td>
+            <td><% out.print(filament.getTemperature()); %></td>
+            <td><% out.print(filament.getEllipse()); %></td>
+            <td><% out.print(filament.getConstrast()); %></td>
+        </tr>
         <%}%>
     </table>

@@ -5,17 +5,17 @@
   Time: 10:33
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>Welcome</title>
 </head>
-<body background="bbback.jpg">
+<body background="Image/bbback.jpg">
 
 <span style="color: #fff5bf">
 <p align="right">
-    <img src="backg.jpeg" width="150" height="1600" align="right">
-    <img src="logo.JPG" width="150" height="120" border="2" align="right"><h2><I> Welcome to INAF Database </I></h2>
+    <img src="Image/backg.jpeg" width="150" height="1600" align="right">
+    <img src="Image/logo.JPG" width="150" height="120" border="2" align="right"><h2><I> Welcome to INAF Database </I></h2>
 <br><br><br><br><hr>
 <br>
 </span>

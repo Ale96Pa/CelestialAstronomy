@@ -6,7 +6,7 @@
   Time: 11:12
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 
 <!-- Si dichiara la variabile userBean e istanzia un oggetto UserBean -->
 <jsp:useBean id="instrumentBean" scope="request"  class="uniroma2.it.dicii.celestialAstronomy.View.InstrumentBean" />
@@ -23,7 +23,7 @@
                 </h3></U></I> <%
                 throw new AlreadyPresentException();
             } else
-                %><jsp:forward page="registrationDONE.jsp" /> <%
+                %><jsp:forward page="adm_registrationDONE.jsp" /> <%
         } catch (AlreadyPresentException e){
             e.printStackTrace();
         }
@@ -37,11 +37,11 @@
 </head>
 <body bgcolor="#f0f8ff">
 <p align="right">
-    <img src="logo.JPG" width="150" height="120" border="2" align="right"><h2><I> Instrument Area </I></h2>
+    <img src="Image/logo.JPG" width="150" height="120" border="2" align="right"><h2><I> Instrument Area </I></h2>
 <br><br><br><br><hr>
 <h3> Insert data for a new instrument </h3>
 <br>
-<form action="insertInstrument.jsp" method="get" id="instrument">
+<form action="adm_insertInstrument.jsp" method="get" id="instrument">
     <fieldset>
         <legend> Insert instrument : </legend>
         <label for="name"> Name: </label>

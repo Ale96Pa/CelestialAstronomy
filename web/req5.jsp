@@ -1,6 +1,5 @@
 <%@ page import="uniroma2.it.dicii.celestialAstronomy.Control.FilamentController" %>
 <%@ page import="uniroma2.it.dicii.celestialAstronomy.Exception.WrongDataException" %>
-<%@ page import="sun.text.normalizer.Utility" %>
 <%--
   Created by IntelliJ IDEA.
   User: Alessandro
@@ -8,7 +7,7 @@
   Time: 16:31
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 
 <!-- Si dichiara la variabile filamentBean e istanzia un oggetto FilamentBean -->
 <jsp:useBean id="filamentBean" scope="request"  class="uniroma2.it.dicii.celestialAstronomy.View.FilamentBean" />
@@ -37,7 +36,7 @@
 </head>
 <body bgcolor="#f0f8ff">
 <p align="right">
-    <img src="logo.JPG" width="150" height="120" border="2" align="right"><h2><I> Information about filament </I></h2>
+    <img src="Image/logo.JPG" width="150" height="120" border="2" align="right"><h2><I> Information about filament </I></h2>
 <br><br><br><br><hr>
 
 <form action="req5.jsp" method="get" id="req5">

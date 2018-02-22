@@ -7,7 +7,7 @@
   Time: 16:32
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 
 <!-- Si dichiara la variabile segmentBean e istanzia un oggetto SegmentBean -->
 <jsp:useBean id="segmentBean" scope="request"  class="uniroma2.it.dicii.celestialAstronomy.View.SegmentBean" />
@@ -37,7 +37,7 @@
 <body bgcolor="#f0f8ff">
 
 <p align="right">
-    <img src="logo.JPG" width="150" height="120" border="2" align="right"><h2><I> Calculate the distance of segment's vertex from perimeter </I></h2>
+    <img src="Image/logo.JPG" width="150" height="120" border="2" align="right"><h2><I> Calculate the distance of segment's vertex from perimeter </I></h2>
 <br><br><br><br><hr>
 <form action="req11.jsp" method="get" id="req11">
 <fieldset>

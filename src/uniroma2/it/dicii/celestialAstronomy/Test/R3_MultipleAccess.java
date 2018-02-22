@@ -3,7 +3,7 @@ package uniroma2.it.dicii.celestialAstronomy.Test;
 
 public class R3_MultipleAccess extends Thread {
 
-    public static void multipleAccess(){
+    private static void multipleAccess(){
         Admin.deleteElementForTest();
         Admin admin1 = new Admin(1, 1000);
         Thread a1 = new Thread(admin1);

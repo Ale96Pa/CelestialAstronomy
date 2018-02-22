@@ -4,7 +4,6 @@ import uniroma2.it.dicii.celestialAstronomy.Model.Star;
 import uniroma2.it.dicii.celestialAstronomy.Repositories.Utility.TypeOfStars;
 import uniroma2.it.dicii.celestialAstronomy.Repositories.Utility.UtenteDao;
 import uniroma2.it.dicii.celestialAstronomy.Repositories.Utility.Utility;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,45 +62,6 @@ public class StarRepository {
     }
 
     /*
-    Access to DB to find the number of stars in a filament
-    @Parameter: filament's ID
-    @Return: an integer that is the number of stars included in the filament
-     */
-    public static int numStarInFilament (String filamentID){
-        Connection connection;
-        Statement statement;
-        ResultSet result;
-        int total = 0;
-
-        try {
-            // Caricamento del Driver
-            String driver = UtenteDao.getDriverClassName();
-            Class.forName(driver);
-            // Creazione della Connessione
-            String urlDB = UtenteDao.getDbUrl();
-            String username = UtenteDao.getUSER();
-            String password = UtenteDao.getPASS();
-            connection = DriverManager.getConnection(urlDB, username, password);
-            // Creazione dello Statement per le interrogazioni
-            statement = connection.createStatement();
-
-            // Esecuzione della query
-            String query =  "SELECT count(*) as allInnerStars " +
-                            " FROM stella S join inclusione I on S.id=I.stella " +
-                            " WHERE I.filamento = '" + filamentID +"' ";
-            result = statement.executeQuery(query);
-
-            while (result.next()) {
-                total = result.getInt("allInnerStars");
-            }
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
-        return total;
-    }
-
-
-    /*
     Access to DB to find the number of stars for each type included in a filament
     @Parameter: filament's ID
     @Return: HashMap built like <Key, Value> <---> <Type_of_star, number_of_stars_of_that_type>
@@ -129,7 +89,7 @@ public class StarRepository {
             // Esecuzione della query
             String query;
             if(Utility.isInteger(filamentID_name))
-                query =  "SELECT S.tipo, count(S.tipo) as numStarByType " +
+                query =     "SELECT S.tipo, count(S.tipo) as numStarByType " +
                             " FROM stella S join inclusione I on S.id=I.stella " +
                             " WHERE I.filamento = '" + filamentID_name +"' " +
                             " GROUP BY S.tipo";

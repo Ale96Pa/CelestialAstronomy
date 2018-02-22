@@ -7,7 +7,7 @@
   Time: 11:12
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 
 <!-- Si dichiara la variabile userBean e istanzia un oggetto UserBean -->
 <jsp:useBean id="userBean" scope="request"  class="uniroma2.it.dicii.celestialAstronomy.View.UserBean" />
@@ -25,7 +25,7 @@
                     </h3></U></I> <%
                     throw new AlreadyPresentException();
                 } else
-%>                  <jsp:forward page="registrationDONE.jsp" /> <%
+%>                  <jsp:forward page="adm_registrationDONE.jsp" /> <%
             } else{
 %>              <p class="text-info"> <I> <U> <h3>
                 <span style="color: red; "> Check your data: username and password must have more than 6 character  </span>
@@ -46,11 +46,11 @@
 
 <body bgcolor="#f0f8ff">
 <p align="right">
-    <img src="logo.JPG" width="150" height="120" border="2" align="right"><h2><I> User Area </I></h2>
+    <img src="Image/logo.JPG" width="150" height="120" border="2" align="right"><h2><I> User Area </I></h2>
 <br><br><br><br><hr>
 <h3> Register a new user </h3>
 <br>
-<form action="registerUser.jsp" method="post" id="newuser">
+<form action="adm_registerUser.jsp" method="post" id="newuser">
     <fieldset>
         <legend> Insert new user : </legend>
         <label for="nome"> Name: </label>

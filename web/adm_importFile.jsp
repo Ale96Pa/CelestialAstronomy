@@ -5,7 +5,7 @@
   Time: 11:11
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <!-- Si dichiara la variabile csvFileBean e istanzia un oggetto CsvFileBean -->
 <jsp:useBean id="csvFileBean" scope="request"  class="uniroma2.it.dicii.celestialAstronomy.View.CsvFileBean" />
 <!-- Mappa automaticamente tutti gli attributi dell'oggetto csvFileBean -->
@@ -23,7 +23,7 @@
             </span>
             </h3></U></I> <%
             } else {
-%>          <jsp:forward page="registrationDONE.jsp" /> <%
+%>          <jsp:forward page="adm_registrationDONE.jsp" /> <%
             }
         }
     }
@@ -38,11 +38,11 @@
 <body bgcolor="#f0f8ff">
 
 <p align="right">
-    <img src="logo.JPG" width="150" height="120" border="2" align="right"><h2><I> File Area </I></h2>
+    <img src="Image/logo.JPG" width="150" height="120" border="2" align="right"><h2><I> File Area </I></h2>
 <br><br><br><br><hr>
 <h3> Import a new file </h3>
 <br>
-<form action="importFile.jsp" method="get" id="importation">
+<form action="adm_importFile.jsp" method="get" id="importation">
     <fieldset>
 
         <legend> Import new file : </legend>

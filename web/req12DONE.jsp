@@ -8,7 +8,7 @@
   Time: 15:31
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>Results</title>
@@ -30,7 +30,7 @@
 </head>
 <body bgcolor="#f0f8ff">
 <p align="right">
-    <img src="logo.JPG" width="150" height="120" border="2" align="right"><h2><I> Search the stars by distance from backbone </I></h2>
+    <img src="Image/logo.JPG" width="150" height="120" border="2" align="right"><h2><I> Search the stars by distance from backbone </I></h2>
 <br><br><br><br><hr>
 <br>
 <h3> Page <% out.print(Integer.parseInt(request.getParameter("page"))+1); %> </h3>
@@ -62,13 +62,13 @@
         <th>Flux </th>
         <th>Distance </th>
     </tr> <%
-    for(int i=0; i<stars.size(); i++){
-    %><tr>
-        <td> <% out.print(stars.get(i).getID()); %> </td>
-        <td> <%  out.print(stars.get(i).getName() ); %> </td>
-        <td> <% out.print(stars.get(i).getType()); %> </td>
-        <td> <% out.print(stars.get(i).getFlux()); %> </td>
-        <td> <% out.print(stars.get(i).getDistanceFromBackbone()); %> </td>
-    </tr>
-    <%}%>
+        for (Star star : stars) {
+        %><tr>
+            <td><% out.print(star.getID()); %></td>
+            <td><% out.print(star.getName()); %></td>
+            <td><% out.print(star.getType()); %></td>
+            <td><% out.print(star.getFlux()); %></td>
+            <td><% out.print(star.getDistanceFromBackbone()); %></td>
+        </tr>
+        <%}%>
     </table>

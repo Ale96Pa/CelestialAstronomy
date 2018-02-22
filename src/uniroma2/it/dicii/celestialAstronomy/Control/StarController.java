@@ -51,7 +51,7 @@ public class StarController {
     Return the list of stars included both in a rectangle and in a filament
     {for REQ-FN-10}
      */
-    public static ArrayList<Star> findStarInRectangleAndFilament(RegionBean bean) {
+    private static ArrayList<Star> findStarInRectangleAndFilament(RegionBean bean) {
         try{
             if(bean.getBase()<=0 || bean.getHigh()<=0)
                 throw new WrongDataException();
@@ -69,11 +69,11 @@ public class StarController {
 
         ArrayList<Star> stars = findStarInRectangle(bean);
         ArrayList<Star> starsInFilament = findStarInRectangleAndFilament(bean);
-        for(int i =0; i<starsInFilament.size(); i++){
-            for(int j=0; j<stars.size(); j++){
-                Star s = starsInFilament.get(i); // anche in filamento
-                Star s2 = stars.get(j); //stelle totali
-                if (s.getID() == s2.getID()){
+
+        for (Star aStarsInFilament : starsInFilament) {
+            for (int j = 0; j < stars.size(); j++) {
+                Star s2 = stars.get(j); //all stars
+                if (aStarsInFilament.getID() == s2.getID()) {
                     stars.remove(j);
                 }
             }

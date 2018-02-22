@@ -5,7 +5,7 @@
   Time: 21:08
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 
 <!-- Si dichiara la variabile loginBean e istanzia un oggetto LoginBean -->
 <jsp:useBean id="loginBean" scope="request"  class="uniroma2.it.dicii.celestialAstronomy.View.LoginBean"/>
@@ -37,9 +37,9 @@
     <title>Login</title>
   </head>
 
-  <body background="bbback.jpg" bgcolor="blue">
+  <body background="Image/bbback.jpg" bgcolor="blue">
   <p align="center">
-    <img src="logo.JPG" width="200" height="170" border="2">
+    <img src="Image/logo.JPG" width="200" height="170" border="2">
   </p>
 
 <span style="color: lightgoldenrodyellow;">

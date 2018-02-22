@@ -10,7 +10,7 @@
   Time: 16:32
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 
 <!-- Si dichiara la variabile filamentBean e istanzia un oggetto FilamentBean -->
 <jsp:useBean id="filamentBean" scope="request"  class="uniroma2.it.dicii.celestialAstronomy.View.FilamentBean" />
@@ -27,7 +27,7 @@
 <body bgcolor="#f0f8ff">
 
 <p align="right">
-    <img src="logo.JPG" width="150" height="120" border="2" align="right"><h2><I> Calculate the position of a star respect to backbone </I></h2>
+    <img src="Image/logo.JPG" width="150" height="120" border="2" align="right"><h2><I> Calculate the position of a star respect to backbone </I></h2>
 <br><br><br><br><hr>
 <form action="req12.jsp" method="get" id="req12">
 <fieldset>

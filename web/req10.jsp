@@ -10,7 +10,7 @@
   Time: 16:32
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 
 <!-- Si dichiara la variabile regionBean e istanzia un oggetto RegionBean -->
 <jsp:useBean id="regionBean" scope="request"  class="uniroma2.it.dicii.celestialAstronomy.View.RegionBean" />
@@ -43,7 +43,7 @@
 <body bgcolor="#f0f8ff">
 
 <p align="right">
-    <img src="logo.JPG" width="150" height="120" border="2" align="right"><h2><I> Calculate the rate of stars in a region </I></h2>
+    <img src="Image/logo.JPG" width="150" height="120" border="2" align="right"><h2><I> Calculate the rate of stars in a region </I></h2>
 <br><br><br><br><hr>
 <form action="req10.jsp" method="get" id="req10">
 <fieldset>
@@ -70,7 +70,7 @@
 
 
 <% if(request.getParameter("query")!= null){
-    ArrayList<Star> starsInRectangle = StarController.findStarInRectangle(regionBean); //risultati totali
+    ArrayList<Star> starsInRectangle = StarController.findStarInRectangle(regionBean);
     if(regionBean.getBase()<=0 || regionBean.getHigh()<=0){
         %><p class="text-info"> <I><U><h3>
         <span style="color: red; ">  Base and High cannot be NEGATIVE or ZERO!  </span>
@@ -113,14 +113,15 @@
             <th>Longitude </th>
             <th>Latitude</th>
         </tr> <%
-        for(int i=0; i<starsInRectangle.size(); i++){
-        %><tr>
-            <td> <% out.print(starsInRectangle.get(i).getID()); %> </td>
-            <td> <% out.print(starsInRectangle.get(i).getName() ); %> </td>
-            <td> <% out.print(starsInRectangle.get(i).getType()); %> </td>
-            <td> <% out.print(starsInRectangle.get(i).getFlux()); %> </td>
-            <td> <% out.print(starsInRectangle.get(i).getLongitude()); %> </td>
-            <td> <% out.print(starsInRectangle.get(i).getLatitude()); %> </td>
+        for (Star aStarsInRectangle : starsInRectangle) {
+        %>
+        <tr>
+            <td><% out.print(aStarsInRectangle.getID()); %></td>
+            <td><% out.print(aStarsInRectangle.getName()); %></td>
+            <td><% out.print(aStarsInRectangle.getType()); %></td>
+            <td><% out.print(aStarsInRectangle.getFlux()); %></td>
+            <td><% out.print(aStarsInRectangle.getLongitude()); %></td>
+            <td><% out.print(aStarsInRectangle.getLatitude()); %></td>
         </tr>
         <%}%>
     </table> <%
