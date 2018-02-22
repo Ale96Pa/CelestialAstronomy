@@ -13,7 +13,7 @@ public class R6_SearchFilamentByContrastEllipse {
 //    @Before
 
     /*
-    Find centroide, extensione e number of segments of filament just inserted
+    Find filament by contrast and ellipse based on data just inserted
      */
 //    @Test
 

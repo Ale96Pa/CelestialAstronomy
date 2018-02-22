@@ -19,6 +19,11 @@ public class R5_InformationFilament {
 //    @Test
 
     /*
+    Try to find information about a non-existent filament
+     */
+//    @Test
+
+    /*
     Delete the elements inserted for the test
      */
 //    @After

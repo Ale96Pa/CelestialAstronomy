@@ -13,7 +13,12 @@ public class R8_SearchFilamentInRegion {
 //    @Before
 
     /*
-    Find centroide, extensione e number of segments of filament just inserted
+    cerchio
+     */
+//    @Test
+
+    /*
+    quadrato
      */
 //    @Test
 

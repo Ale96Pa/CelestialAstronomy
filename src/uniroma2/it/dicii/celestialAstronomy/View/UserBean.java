@@ -61,7 +61,7 @@ public class UserBean {
 
     public boolean validateUser(){
         boolean valida = false;
-        if(username.length() >= 6 && password.length() >= 6)
+        if(getUsername().length() >= 6 && getPassword().length() >= 6)
             valida = true;
         return valida;
     }

@@ -9,6 +9,8 @@ import uniroma2.it.dicii.celestialAstronomy.Repositories.FileRepository;
 import uniroma2.it.dicii.celestialAstronomy.Repositories.Utility.UtenteDao;
 import uniroma2.it.dicii.celestialAstronomy.View.CsvFileBean;
 import uniroma2.it.dicii.celestialAstronomy.View.UserBean;
+
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -63,6 +65,7 @@ public class R2_3_4_Administrator {
     @Test
     public void updateFile(){
         int control;
+        FileRepository.insertFilamentFile(CsvFileBean.getAbsolutePath()+"testFilament",0,0);
         FileRepository.insertPerimeterFile(CsvFileBean.getAbsolutePath()+"test",0,0);
         control = FileRepository.insertPerimeterFile(CsvFileBean.getAbsolutePath()+"testUpdated",0,0);
         Assert.assertNotEquals(control, 0);
@@ -109,8 +112,11 @@ public class R2_3_4_Administrator {
                             "where userid='testRegularUsername'";
             String delete2 = "delete from strutturagalattica " +
                              "where tipo='PER' and longitudine='0' ";
+            String delete3 = "delete from filamento " +
+                             "where nome ='none'";
             statement.executeUpdate(delete);
             statement.executeUpdate(delete2);
+            statement.executeUpdate(delete3);
             // Chiusura della connessione
             connection.close();
             statement.close();

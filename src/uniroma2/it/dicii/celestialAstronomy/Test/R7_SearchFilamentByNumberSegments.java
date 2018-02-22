@@ -13,7 +13,7 @@ public class R7_SearchFilamentByNumberSegments {
 //    @Before
 
     /*
-    Find centroide, extensione e number of segments of filament just inserted
+
      */
 //    @Test
 
