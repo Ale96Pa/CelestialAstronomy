@@ -3,6 +3,7 @@ package uniroma2.it.dicii.celestialAstronomy.Repositories;
 import uniroma2.it.dicii.celestialAstronomy.Repositories.Utility.UtenteDao;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class SegmentRepository {
 
@@ -13,8 +14,8 @@ public class SegmentRepository {
      */
     public static ArrayList<Double> findMinVertexOfSegment(String segmentID){
         ArrayList<Double> vertexMin = new ArrayList<>();
-        Connection connection;
-        Statement statement;
+        Connection connection = null;
+        Statement statement = null;
         ResultSet result;
 
         try {
@@ -45,6 +46,13 @@ public class SegmentRepository {
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            try{
+                Objects.requireNonNull(connection).close();
+                Objects.requireNonNull(statement).close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return vertexMin;
     }
@@ -56,8 +64,8 @@ public class SegmentRepository {
      */
     public static ArrayList<Double> findMaxVertexOfSegment(String segmentID){
         ArrayList<Double> vertexMax = new ArrayList<>();
-        Connection connection;
-        Statement statement;
+        Connection connection = null;
+        Statement statement = null;
         ResultSet result;
 
         try {
@@ -88,6 +96,13 @@ public class SegmentRepository {
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            try{
+                Objects.requireNonNull(connection).close();
+                Objects.requireNonNull(statement).close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return vertexMax;
     }
@@ -99,8 +114,8 @@ public class SegmentRepository {
      */
     public static String findFilamentOfSegment(String segmentID){
         String filamentID=null;
-        Connection connection;
-        Statement statement;
+        Connection connection = null;
+        Statement statement = null;
         ResultSet result;
 
         try {
@@ -125,6 +140,13 @@ public class SegmentRepository {
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            try{
+                Objects.requireNonNull(connection).close();
+                Objects.requireNonNull(statement).close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return filamentID;
     }
@@ -136,8 +158,8 @@ public class SegmentRepository {
      */
     public static double distanceVertexFromPerimeter(double longVertex, double latVertex, String filamentID ){
         double distance = 0;
-        Connection connection;
-        Statement statement;
+        Connection connection = null;
+        Statement statement = null;
         ResultSet result;
 
         try {
@@ -162,6 +184,13 @@ public class SegmentRepository {
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            try{
+                Objects.requireNonNull(connection).close();
+                Objects.requireNonNull(statement).close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return distance;
     }
@@ -173,8 +202,8 @@ public class SegmentRepository {
     @Return: true only if the segment is in DB
      */
     public static boolean searchSegmentByID(String segmentID){
-        Connection connection;
-        Statement statement;
+        Connection connection = null;
+        Statement statement = null;
         ResultSet result;
         boolean esito = false;
 
@@ -199,6 +228,13 @@ public class SegmentRepository {
                 esito = true;
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            try{
+                Objects.requireNonNull(connection).close();
+                Objects.requireNonNull(statement).close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return esito;
     }

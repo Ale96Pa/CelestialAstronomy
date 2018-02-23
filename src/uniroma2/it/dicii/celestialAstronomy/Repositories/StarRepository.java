@@ -7,6 +7,7 @@ import uniroma2.it.dicii.celestialAstronomy.Repositories.Utility.Utility;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class StarRepository {
 
@@ -16,8 +17,8 @@ public class StarRepository {
     @Return: list of Stars included in the filament
      */
     public static ArrayList<Star> findStarInFilament(String filamentID_name){
-        Connection connection;
-        Statement statement;
+        Connection connection = null;
+        Statement statement = null;
         ResultSet result;
         ArrayList<Star> stars = new ArrayList<>();
 
@@ -57,6 +58,13 @@ public class StarRepository {
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            try{
+                Objects.requireNonNull(connection).close();
+                Objects.requireNonNull(statement).close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return stars;
     }
@@ -67,8 +75,8 @@ public class StarRepository {
     @Return: HashMap built like <Key, Value> <---> <Type_of_star, number_of_stars_of_that_type>
      */
     public static HashMap<String, Integer> findNumStarByType(String filamentID_name){
-        Connection connection;
-        Statement statement;
+        Connection connection = null;
+        Statement statement = null;
         ResultSet result;
         HashMap<String,Integer> starByType=new HashMap<>();
         for(TypeOfStars types : TypeOfStars.values()){
@@ -107,6 +115,13 @@ public class StarRepository {
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            try{
+                Objects.requireNonNull(connection).close();
+                Objects.requireNonNull(statement).close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return starByType;
     }
@@ -117,8 +132,8 @@ public class StarRepository {
     @Return: list of Stars included in the rectangle
      */
     public static ArrayList<Star> findStarInRectangle(double longCenter, double latCenter, double base, double high){
-        Connection connection;
-        Statement statement;
+        Connection connection = null;
+        Statement statement = null;
         ResultSet result;
         ArrayList<Star> stars = new ArrayList<>();
 
@@ -157,6 +172,13 @@ public class StarRepository {
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            try{
+                Objects.requireNonNull(connection).close();
+                Objects.requireNonNull(statement).close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return stars;
     }
@@ -167,8 +189,8 @@ public class StarRepository {
    @Return: an HashMap built like <Key, Value> <---> <Type_Of_Star, number_Of_Stars_Of_That_Type>
     */
     public static HashMap<String, Integer> findNumStarByTypeInRectangle(double longCenter, double latCenter, double base, double high){
-        Connection connection;
-        Statement statement;
+        Connection connection = null;
+        Statement statement = null;
         ResultSet result;
         HashMap<String,Integer> starByType=new HashMap<>();
         for(TypeOfStars types : TypeOfStars.values()){
@@ -205,6 +227,13 @@ public class StarRepository {
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            try{
+                Objects.requireNonNull(connection).close();
+                Objects.requireNonNull(statement).close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return starByType;
     }
@@ -216,8 +245,8 @@ public class StarRepository {
     @Return: list of Stars with required features
      */
     public static ArrayList<Star> findStarInRectangleAndFilament(double longCenter, double latCenter, double base, double high){
-        Connection connection;
-        Statement statement;
+        Connection connection = null;
+        Statement statement = null;
         ResultSet result;
         ArrayList<Star> stars = new ArrayList<>();
 
@@ -256,6 +285,13 @@ public class StarRepository {
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            try{
+                Objects.requireNonNull(connection).close();
+                Objects.requireNonNull(statement).close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return stars;
     }
@@ -266,8 +302,8 @@ public class StarRepository {
     @Return: HashMap built like <Key, Value> <---> <Type_of_star, number_of_stars_of_that_type>
      */
     public static HashMap<String, Integer> findNumStarByTypeInRectangleAndFilament(double longCenter, double latCenter, double base, double high){
-        Connection connection;
-        Statement statement;
+        Connection connection = null;
+        Statement statement = null;
         ResultSet result;
         HashMap<String,Integer> starByType=new HashMap<>();
         for(TypeOfStars types : TypeOfStars.values()){
@@ -304,6 +340,13 @@ public class StarRepository {
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            try{
+                Objects.requireNonNull(connection).close();
+                Objects.requireNonNull(statement).close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return starByType;
     }
@@ -314,8 +357,8 @@ public class StarRepository {
     @Return: list of stars with required features
      */
     public static ArrayList<Star> findPositionFromBackbone(String filamentID, int offset, String order){
-        Connection connection;
-        Statement statement;
+        Connection connection = null;
+        Statement statement = null;
         ResultSet result;
         ArrayList<Star> stars = new ArrayList<>();
         String pagination = " LIMIT 20 OFFSET " + offset;
@@ -362,6 +405,13 @@ public class StarRepository {
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            try{
+                Objects.requireNonNull(connection).close();
+                Objects.requireNonNull(statement).close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return stars;
     }

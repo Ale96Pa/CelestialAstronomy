@@ -52,10 +52,11 @@ public class FilamentController {
                 throw new WrongDataException();
             else if(bean.getMinEllipse() > bean.getMaxEllipse())
                 throw new WrongDataException();
+            return FilamentRepository.findFilamentByContrastAndEllipse(bean.getBrillance(), bean.getMinEllipse(), bean.getMaxEllipse(),offset);
         } catch (WrongDataException e){
             e.printStackTrace();
+            return new ArrayList<>();
         }
-        return FilamentRepository.findFilamentByContrastAndEllipse(bean.getBrillance(), bean.getMinEllipse(), bean.getMaxEllipse(),offset);
     }
 
     /*
@@ -78,10 +79,11 @@ public class FilamentController {
                 throw new WrongDataException();
             else if(bean.getMinNumOfSegment() > bean.getMaxNumOfSegment())
                 throw new WrongDataException();
+            return FilamentRepository.findFilamentsByNumOfSegments(bean.getMinNumOfSegment(), bean.getMaxNumOfSegment(), offset);
         } catch (WrongDataException e){
             e.printStackTrace();
+            return new ArrayList<>();
         }
-        return FilamentRepository.findFilamentsByNumOfSegments(bean.getMinNumOfSegment(), bean.getMaxNumOfSegment(), offset);
     }
 
     /*
@@ -92,15 +94,16 @@ public class FilamentController {
         try {
             if(bean.getSideOrRadius() <= 0)
                 throw new WrongDataException();
+            ArrayList<Filament> filaments;
+            if(Objects.equals(bean.getType(), "square"))
+                filaments = FilamentRepository.findFilamentInSquare(bean.getLongitudeCenter(), bean.getLatitudeCenter(), bean.getSideOrRadius());
+            else
+                filaments = FilamentRepository.findFilamentInCircle(bean.getLongitudeCenter(), bean.getLatitudeCenter(), bean.getSideOrRadius());
+            return filaments;
         } catch (WrongDataException e){
             e.printStackTrace();
+            return new ArrayList<>();
         }
-        ArrayList<Filament> filaments;
-        if(Objects.equals(bean.getType(), "square"))
-            filaments = FilamentRepository.findFilamentInSquare(bean.getLongitudeCenter(), bean.getLatitudeCenter(), bean.getSideOrRadius());
-        else
-            filaments = FilamentRepository.findFilamentInCircle(bean.getLongitudeCenter(), bean.getLatitudeCenter(), bean.getSideOrRadius());
-        return filaments;
     }
 
     /*

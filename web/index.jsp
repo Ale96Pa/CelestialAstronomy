@@ -24,9 +24,9 @@
         }
         else {
             %>
-            <p class="text-info"> <I><U><h3>
+            <p class="text-info"><I><U><h3>
                 <span style="color: red; "> Invalid access: check your data and try again  </span>
-            </h3> </U></I></p>
+            </h3></U></I></p>
             <%
         }
     }
@@ -73,6 +73,7 @@
           </div>
       </fieldset>
   </form>
-    </span>
+</span>
+
   </body>
 </html>

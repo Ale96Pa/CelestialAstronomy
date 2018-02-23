@@ -5,6 +5,9 @@ import uniroma2.it.dicii.celestialAstronomy.Repositories.Utility.UtenteDao;
 import uniroma2.it.dicii.celestialAstronomy.Repositories.Utility.Utility;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Objects;
+import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
+import static java.lang.Math.sqrt;
 
 public class FilamentRepository {
 
@@ -15,8 +18,8 @@ public class FilamentRepository {
      */
     public static ArrayList<Double> findCentroide(String filamentID_name) {
         ArrayList<Double> centroide = new ArrayList<>();
-        Connection connection;
-        Statement statement;
+        Connection connection = null;
+        Statement statement = null;
         ResultSet result;
 
         try {
@@ -35,11 +38,11 @@ public class FilamentRepository {
             if(Utility.isInteger(filamentID_name)){
                 query =  "SELECT avg(longitudine) as long, avg(latitudine) as lat " +
                          " FROM strutturagalattica SG join filamento F on SG.filamento = F.id" +
-                         " WHERE SG.filamento = '" + filamentID_name + "'";
+                         " WHERE SG.filamento = '" + filamentID_name + "' and SG.tipo='PER'";
             } else {
                 query =  "SELECT avg(longitudine) as long, avg(latitudine) as lat " +
                          " FROM strutturagalattica SG join filamento F on SG.filamento = F.id" +
-                         " WHERE F.nome = '" + filamentID_name + "'";
+                         " WHERE F.nome = '" + filamentID_name + "'  and SG.tipo='PER'";
             }
             result = statement.executeQuery(query);
 
@@ -52,6 +55,13 @@ public class FilamentRepository {
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            try{
+                Objects.requireNonNull(connection).close();
+                Objects.requireNonNull(statement).close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return centroide;
     }
@@ -63,9 +73,14 @@ public class FilamentRepository {
      */
     public static ArrayList<Double> findPerimeterExtension(String filamentID_name) {
         ArrayList<Double> extension = new ArrayList<>();
-        Connection connection;
-        Statement statement;
-        ResultSet result;
+        // Initialize an array of kind (Longitude, Latitude) for each point necessary to calculate the extension
+        ArrayList<Double> maxPointLong = new ArrayList<>();
+        ArrayList<Double> minPointLong = new ArrayList<>();
+        ArrayList<Double> maxPointLat = new ArrayList<>();
+        ArrayList<Double> minPointLat = new ArrayList<>();
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet result= null;
 
         try {
             // Caricamento del Driver
@@ -79,29 +94,109 @@ public class FilamentRepository {
             // Creazione dello Statement per le interrogazioni
             statement = connection.createStatement();
             // Esecuzione della query
-            String query;
+            String queryForMaxPointLong; // to find the point with maximum longitude
+            String queryForMinPointLong; // to find the point with minimum longitude
+            String queryForMaxPointLat; // to find the point with maximum latitude
+            String queryForMinPointLat; // to find the point with minimum latitude
+
             if(Utility.isInteger(filamentID_name)){
-                query =  "SELECT (max(SG.longitudine)- min(SG.longitudine)) as extensionLong, " +
-                                " (max(SG.latitudine)- min(SG.latitudine)) as extensionLat " +
+                // In case of ID inserted
+                queryForMaxPointLong = "SELECT SG.latitudine , SG.longitudine " +
                         " FROM strutturagalattica SG join filamento F on SG.filamento = F.id" +
-                        " WHERE SG.filamento = '" + filamentID_name + "' and SG.tipo = 'PER' ";
+                        " WHERE SG.filamento ='" + filamentID_name +"' and SG.longitudine =(SELECT (max(SG.longitudine)) " +
+                                            " FROM strutturagalattica SG join filamento F on SG.filamento = F.id" +
+                                            " WHERE SG.filamento ='" + filamentID_name + "' and SG.tipo = 'PER') ";
+
+                queryForMinPointLong = "SELECT SG.latitudine, SG.longitudine " +
+                        " FROM strutturagalattica SG join filamento F on SG.filamento = F.id" +
+                        " WHERE SG.filamento ='" + filamentID_name +"' and SG.longitudine =(SELECT (min(SG.longitudine)) " +
+                                            " FROM strutturagalattica SG join filamento F on SG.filamento = F.id" +
+                                            " WHERE SG.filamento = '" + filamentID_name + "' and SG.tipo = 'PER') ";
+
+                queryForMaxPointLat = "SELECT SG.longitudine ,SG.latitudine" +
+                        " FROM strutturagalattica SG join filamento F on SG.filamento = F.id" +
+                        " WHERE SG.filamento ='" + filamentID_name +"' and SG.latitudine =(SELECT (max(SG.latitudine)) " +
+                                            " FROM strutturagalattica SG join filamento F on SG.filamento = F.id" +
+                                            " WHERE SG.filamento = '" + filamentID_name + "' and SG.tipo = 'PER') ";
+
+                queryForMinPointLat = "SELECT SG.longitudine,SG.latitudine " +
+                        "FROM strutturagalattica SG join filamento F on SG.filamento = F.id" +
+                        " WHERE SG.filamento ='" + filamentID_name +"' and SG.latitudine =(SELECT (min(SG.latitudine)) " +
+                                            " FROM strutturagalattica SG join filamento F on SG.filamento = F.id" +
+                                            " WHERE SG.filamento = '" + filamentID_name + "' and SG.tipo = 'PER') ";
+
             } else {
-                query =  "SELECT (max(SG.longitudine)- min(SG.longitudine)) as extensionLong, " +
-                                " (max(SG.latitudine)- min(SG.latitudine)) as extensionLat " +
+                // In case of NAME inserted
+                queryForMaxPointLong = "SELECT SG.latitudine , SG.longitudine " +
+                        "FROM strutturagalattica SG join filamento F on SG.filamento = F.id" +
+                        " WHERE F.nome ='" + filamentID_name +"' and SG.longitudine =(SELECT (max(SG.longitudine)) " +
+                                            " FROM strutturagalattica SG join filamento F on SG.filamento = F.id" +
+                                            " WHERE F.nome = '" + filamentID_name + "' and SG.tipo = 'PER') ";
+
+                queryForMinPointLong = "SELECT SG.latitudine, SG.longitudine" +
                         " FROM strutturagalattica SG join filamento F on SG.filamento = F.id" +
-                        " WHERE F.nome = '" + filamentID_name + "' and SG.tipo = 'PER' ";
-            }
-            result = statement.executeQuery(query);
+                        " WHERE F.nome ='" + filamentID_name +"' and SG.longitudine =(SELECT (min(SG.longitudine)) " +
+                                            " FROM strutturagalattica SG join filamento F on SG.filamento = F.id" +
+                                            " WHERE F.nome = '" + filamentID_name + "' and SG.tipo = 'PER') ";
 
-            while (result.next()) {
-                Double avgLong = result.getDouble("extensionLong");
-                Double avgLat = result.getDouble("extensionLat");
+                queryForMaxPointLat = "SELECT SG.longitudine ,SG.latitudine" +
+                        " FROM strutturagalattica SG join filamento F on SG.filamento = F.id" +
+                        " WHERE F.nome ='" + filamentID_name +"' and SG.latitudine =(SELECT (max(SG.latitudine))  " +
+                                            " FROM strutturagalattica SG join filamento F on SG.filamento = F.id" +
+                                            " WHERE F.nome = '" + filamentID_name + "' and SG.tipo = 'PER') ";
 
-                extension.add(avgLong);
-                extension.add(avgLat);
+                queryForMinPointLat = "SELECT SG.longitudine,SG.latitudine " +
+                        "FROM strutturagalattica SG join filamento F on SG.filamento = F.id" +
+                        " WHERE F.nome ='" + filamentID_name +"' and SG.latitudine =(SELECT (min(SG.latitudine))  " +
+                                            " FROM strutturagalattica SG join filamento F on SG.filamento = F.id" +
+                                            " WHERE F.nome ='" + filamentID_name + "' and SG.tipo = 'PER') ";
             }
+
+            result = statement.executeQuery(queryForMaxPointLong);
+            while(result.next()) {
+                maxPointLong.add(result.getDouble("longitudine"));
+                maxPointLong.add(result.getDouble("latitudine"));
+            }
+            result.close();
+
+            result = statement.executeQuery(queryForMinPointLong);
+            while(result.next()) {
+                minPointLong.add(result.getDouble("longitudine"));
+                minPointLong.add(result.getDouble("latitudine"));
+            }
+            result.close();
+
+            result= statement.executeQuery(queryForMaxPointLat);
+            while(result.next()) {
+                maxPointLat.add(result.getDouble("longitudine"));
+                maxPointLat.add(result.getDouble("latitudine"));
+            }
+            result.close();
+
+            result=statement.executeQuery(queryForMinPointLat);
+            while(result.next()) {
+                minPointLat.add(result.getDouble("longitudine"));
+                minPointLat.add(result.getDouble("latitudine"));
+            }
+            result.close();
+
+            double avgLong = sqrt(power((maxPointLong.get(0)-minPointLong.get(0)),2)+power((maxPointLong.get(1)
+                    -minPointLong.get(1)),2));
+            double avgLat = sqrt(power((maxPointLat.get(0)-minPointLat.get(0)),2)+power((maxPointLat.get(1)
+                    -minPointLat.get(1)),2));
+            extension.add(avgLong);
+            extension.add(avgLat);
+
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            try{
+                Objects.requireNonNull(connection).close();
+                Objects.requireNonNull(statement).close();
+                Objects.requireNonNull(result).close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return extension;
     }
@@ -113,8 +208,8 @@ public class FilamentRepository {
     */
     public static int findNumberSegments(String filamentID_name) {
         int numOfSeg = 0;
-        Connection connection;
-        Statement statement;
+        Connection connection = null;
+        Statement statement = null;
         ResultSet result;
 
         try {
@@ -148,6 +243,13 @@ public class FilamentRepository {
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            try{
+                Objects.requireNonNull(connection).close();
+                Objects.requireNonNull(statement).close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return numOfSeg;
     }
@@ -158,8 +260,8 @@ public class FilamentRepository {
     @ Return: a list of Filaments that respect the features
      */
     public static ArrayList<Filament> findFilamentByContrastAndEllipse(double percentBrillanza, double minEllipse, double maxEllipse, int offset) {
-        Connection connection;
-        Statement statement;
+        Connection connection = null;
+        Statement statement = null;
         ResultSet result;
         ArrayList<Filament> filaments = new ArrayList<>();
         String pagination = " LIMIT 20 OFFSET " + offset;
@@ -200,6 +302,13 @@ public class FilamentRepository {
 
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            try{
+                Objects.requireNonNull(connection).close();
+                Objects.requireNonNull(statement).close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return filaments;
     }
@@ -211,8 +320,8 @@ public class FilamentRepository {
     @Return: an integer that is the total number of filaments
      */
     public static int numAllFilaments(){
-        Connection connection;
-        Statement statement;
+        Connection connection = null;
+        Statement statement = null;
         ResultSet result;
         int total=0;
 
@@ -237,6 +346,13 @@ public class FilamentRepository {
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            try{
+                Objects.requireNonNull(connection).close();
+                Objects.requireNonNull(statement).close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return total;
     }
@@ -247,8 +363,8 @@ public class FilamentRepository {
     @Return: a list of Filaments that respect the features
      */
     public static ArrayList<Filament> findFilamentsByNumOfSegments(int minSeg,int maxSeg, int offset) {
-        Connection connection;
-        Statement statement;
+        Connection connection = null;
+        Statement statement = null;
         ResultSet result;
         ArrayList<Filament> filaments = new ArrayList<>();
         String pagination = " LIMIT 20 OFFSET " + offset;
@@ -289,6 +405,13 @@ public class FilamentRepository {
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            try{
+                Objects.requireNonNull(connection).close();
+                Objects.requireNonNull(statement).close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return filaments;
     }
@@ -299,8 +422,8 @@ public class FilamentRepository {
     @Return: list of Filaments included in the square
      */
     public static ArrayList<Filament> findFilamentInSquare(double longcenter,double latcenter,double side){
-        Connection connection;
-        Statement statement;
+        Connection connection = null;
+        Statement statement = null;
         ResultSet result;
         ArrayList<Filament> filaments = new ArrayList<>();
 
@@ -342,6 +465,13 @@ public class FilamentRepository {
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            try{
+                Objects.requireNonNull(connection).close();
+                Objects.requireNonNull(statement).close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return filaments;
     }
@@ -352,8 +482,8 @@ public class FilamentRepository {
     @Return: list of Filaments included in the circle
      */
     public static ArrayList<Filament> findFilamentInCircle(double longcenter,double latcenter,double radius){
-        Connection connection;
-        Statement statement;
+        Connection connection = null;
+        Statement statement = null;
         ResultSet result;
         ArrayList<Filament> filaments = new ArrayList<>();
 
@@ -393,6 +523,13 @@ public class FilamentRepository {
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            try{
+                Objects.requireNonNull(connection).close();
+                Objects.requireNonNull(statement).close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return filaments;
     }
@@ -404,8 +541,8 @@ public class FilamentRepository {
     @Return: true only if the filament is in DB
      */
     public static boolean searchFilament(String filamentIdOrName){
-        Connection connection;
-        Statement statement;
+        Connection connection = null;
+        Statement statement = null;
         ResultSet result;
         boolean esito = false;
 
@@ -437,6 +574,13 @@ public class FilamentRepository {
                 esito = true;
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                Objects.requireNonNull(connection).close();
+                Objects.requireNonNull(statement).close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return esito;
     }
