@@ -9,8 +9,6 @@ import uniroma2.it.dicii.celestialAstronomy.Repositories.FileRepository;
 import uniroma2.it.dicii.celestialAstronomy.Repositories.Utility.UtenteDao;
 import uniroma2.it.dicii.celestialAstronomy.View.CsvFileBean;
 import uniroma2.it.dicii.celestialAstronomy.View.UserBean;
-
-import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -22,7 +20,7 @@ public class R2_3_4_Administrator {
     Try to register an irregular user(password with less than 6 characters)
      */
     @Test
-    public void irregularRegistration(){
+    public synchronized void irregularRegistration(){
         boolean esito = true;
         UserBean user = new UserBean();
         user.setUsername("morethan6");
@@ -43,7 +41,7 @@ public class R2_3_4_Administrator {
     In similar way (so not much significant) should be insert satellites and instruments
      */
     @Test
-    public void regularRegistration(){
+    public synchronized void regularRegistration(){
         boolean esito = false;
         UserBean user = new UserBean();
         user.setUsername("testRegularUsername");
