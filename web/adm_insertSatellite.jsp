@@ -26,8 +26,8 @@
                 throw new WrongDataException();
             }
             else if(!esitoInserimento){
-                %><I> <U> <h3>
-                <span style="color: red; "> Instrument is already present in DataBase  </span>
+                %><I><U><h3>
+                <span style="color: red; "> Instrument is already present in DataBase or you insert NO agencies  </span>
                 </h3></U></I> <%
                 throw new AlreadyPresentException();
             }

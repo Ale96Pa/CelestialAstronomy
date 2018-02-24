@@ -10,7 +10,7 @@ public class InstrumentRepository {
     Access to DB to insert a new instrument (with attributes Nome and Tipo)
     {for REQ-FN-3}
      */
-    public static boolean insertInstrument(String nome) {
+    public static boolean insertInstrument(String nome, double banda) {
         boolean esito= false;
         Connection connection;
         Statement statement;
@@ -28,86 +28,8 @@ public class InstrumentRepository {
             statement = connection.createStatement();
 
             // Scrittura dell'istruzione CRUD sql
-            String insert = "insert into strumento(nome, tipo) " +
-                            " values ('" + nome + "' , '" + "' )";
-            int updatedTuple = statement.executeUpdate(insert);
-            if(updatedTuple == 0)
-                throw new AlreadyPresentException();
-            else
-                esito = true;
-
-            // Chiusura della connessione
-            connection.close();
-            statement.close();
-        } catch (ClassNotFoundException | SQLException | AlreadyPresentException e) {
-            e.printStackTrace();
-        }
-        return esito;
-    }
-
-    /*
-    Access to DB to insert a new banda (with attribute Valore)
-    {for REQ-FN-3}
-     */
-    public static boolean insertBand(double banda) {
-        boolean esito= false;
-        Connection connection;
-        Statement statement;
-
-        try {
-            // Caricamento del Driver
-            String driver = UtenteDao.getDriverClassName();
-            Class.forName(driver);
-            // Creazione della Connessione
-            String urlDB = UtenteDao.getDbUrl();
-            String username = UtenteDao.getUSER();
-            String password = UtenteDao.getPASS();
-            connection = DriverManager.getConnection(urlDB, username, password);
-            // Creazione dello Statement per le interrogazioni
-            statement = connection.createStatement();
-
-            // Scrittura dell'istruzione CRUD sql
-            String insert = "insert into banda(valore) " +
-                            " values ('" + banda + "' )";
-            int updatedTuple = statement.executeUpdate(insert);
-            if(updatedTuple == 0)
-                throw new AlreadyPresentException();
-            else
-                esito = true;
-
-            // Chiusura della connessione
-            connection.close();
-            statement.close();
-        } catch (ClassNotFoundException | SQLException | AlreadyPresentException e) {
-            e.printStackTrace();
-        }
-        return esito;
-    }
-
-    /*
-    Access to DB to insert a new couple instrument-band (necessary for the relationship between the entities)
-    {for REQ-FN-3}
-     */
-    public static boolean updateCattura(String strumento, double banda) {
-        boolean esito= false;
-        Connection connection;
-        Statement statement;
-
-        try {
-            // Caricamento del Driver
-            String driver = UtenteDao.getDriverClassName();
-            Class.forName(driver);
-            // Creazione della Connessione
-            String urlDB = UtenteDao.getDbUrl();
-            String username = UtenteDao.getUSER();
-            String password = UtenteDao.getPASS();
-            connection = DriverManager.getConnection(urlDB, username, password);
-            // Creazione dello Statement per le interrogazioni
-            statement = connection.createStatement();
-
-            // Scrittura dell'istruzione CRUD sql
-            String insert = "insert into cattura(strumento, banda) " +
-                            " values ('" + strumento + "' , '"+ banda +"' )";
+            String insert = "insert into strumento(nome, banda) " +
+                            " values ('" + nome + "' , '" + banda + "' )";
             int updatedTuple = statement.executeUpdate(insert);
             if(updatedTuple == 0)
                 throw new AlreadyPresentException();

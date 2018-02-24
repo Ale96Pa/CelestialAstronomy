@@ -19,7 +19,7 @@
             boolean esitoInserimento = InstrumentController.registerInstrument(instrumentBean);
             if(!esitoInserimento){
                 %><I> <U> <h3>
-                <span style="color: red; "> Instrument is already present in DataBase  </span>
+                <span style="color: red; "> Instrument is already present in DataBase or you insert NO bands </span>
                 </h3></U></I> <%
                 throw new AlreadyPresentException();
             } else

@@ -6,29 +6,29 @@ import uniroma2.it.dicii.celestialAstronomy.View.SatelliteBean;
 public class SatelliteController {
 
     /*
-   Insert a new satellite in the database, updating also the tables "AGENZIA" and "MISSIONE" if necessary
+   Insert a new satellite in the database
     */
     public static synchronized boolean registerSatellite(SatelliteBean bean){
-        boolean esito = SatelliteRepository.insertSatellite(bean.getName(), bean.getInitialdate(), bean.getEnddate());
+        boolean esito = false;
         if(bean.getAgencies1() != null){
-            SatelliteRepository.insertAgencies(bean.getAgencies1());
-            esito = SatelliteRepository.updateMissione(bean.getName(), bean.getAgencies1());
+            esito = SatelliteRepository.insertSatellite(bean.getName(), bean.getAgencies1(), bean.getInitialdate(),
+                    bean.getEnddate());
         }
         if(bean.getAgencies2() != null){
-            SatelliteRepository.insertAgencies(bean.getAgencies2());
-            esito = SatelliteRepository.updateMissione(bean.getName(), bean.getAgencies2());
+            esito = SatelliteRepository.insertSatellite(bean.getName(), bean.getAgencies2(), bean.getInitialdate(),
+                    bean.getEnddate());
         }
         if(bean.getAgencies3() != null){
-            SatelliteRepository.insertAgencies(bean.getAgencies3());
-            esito = SatelliteRepository.updateMissione(bean.getName(), bean.getAgencies3());
+            esito = SatelliteRepository.insertSatellite(bean.getName(), bean.getAgencies3(), bean.getInitialdate(),
+                    bean.getEnddate());
         }
         if(bean.getAgencies4() != null){
-            SatelliteRepository.insertAgencies(bean.getAgencies4());
-            esito = SatelliteRepository.updateMissione(bean.getName(), bean.getAgencies4());
+            esito = SatelliteRepository.insertSatellite(bean.getName(), bean.getAgencies4(), bean.getInitialdate(),
+                    bean.getEnddate());
         }
         if(bean.getAgencies5() != null){
-            SatelliteRepository.insertAgencies(bean.getAgencies5());
-            esito = SatelliteRepository.updateMissione(bean.getName(), bean.getAgencies5());
+            esito = SatelliteRepository.insertSatellite(bean.getName(), bean.getAgencies5(), bean.getInitialdate(),
+                    bean.getEnddate());
         }
         return esito;
     }
