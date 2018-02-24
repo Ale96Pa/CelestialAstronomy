@@ -4,16 +4,12 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import uniroma2.it.dicii.celestialAstronomy.Control.FileController;
 import uniroma2.it.dicii.celestialAstronomy.Control.StarController;
-import uniroma2.it.dicii.celestialAstronomy.Model.Filament;
 import uniroma2.it.dicii.celestialAstronomy.Model.Star;
 import uniroma2.it.dicii.celestialAstronomy.Repositories.FileRepository;
 import uniroma2.it.dicii.celestialAstronomy.Repositories.Utility.UtenteDao;
 import uniroma2.it.dicii.celestialAstronomy.View.CsvFileBean;
 import uniroma2.it.dicii.celestialAstronomy.View.StarBean;
-
-import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -24,8 +20,11 @@ public class R9_SearchInclusionStar {
 
     /*
     Insert new informations' filament to verify the correct execution
-    [... metti dati da inserire ...]
-     */
+    Data inserted:
+    * Filament with id: 123456789 with perimeter defined by the following points: (2,5), (-2,1), (-2,5) and (3,1)
+    * Star: 1111111 in (-1,2) (included in the filament)
+    * Star: 1111113 in (20,20)
+    */
     @Before
     public void insertData(){
         String path1 = CsvFileBean.getAbsolutePath()+"testFilament";
@@ -39,7 +38,7 @@ public class R9_SearchInclusionStar {
     }
 
     /*
-    ..
+    Find the stars included in a filament based on data just inserted
      */
     @Test
     public void test(){

@@ -10,7 +10,6 @@ import uniroma2.it.dicii.celestialAstronomy.Repositories.FileRepository;
 import uniroma2.it.dicii.celestialAstronomy.Repositories.Utility.UtenteDao;
 import uniroma2.it.dicii.celestialAstronomy.View.CsvFileBean;
 import uniroma2.it.dicii.celestialAstronomy.View.RegionBean;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -39,7 +38,7 @@ public class R8_SearchFilamentInRegion {
     }
 
     /*
-    cerchio e quadrato
+    Find filaments in region (Square or circle) based on data just inserted
      */
     @Test
     public void test(){
@@ -78,7 +77,25 @@ public class R8_SearchFilamentInRegion {
     /*
     Verify the execution of Exception in case of wrong input: side/radius = 0
      */
-//    @Test
+    @Test
+    public void irregularTest(){
+        boolean esito= true;
+        RegionBean region = new RegionBean();
+        region.setLongitudeCenter(0);
+        region.setLatitudeCenter(0);
+        region.setSideOrRadius(0);
+        region.setType(true);
+        ArrayList<Filament> filamentInSquare = FilamentController.findFilamentsInRegion(region);
+        if(filamentInSquare.size()==0)
+            esito=false;
+        for (Filament aResult : filamentInSquare) {
+            if (aResult.getID() == 123456789)
+                esito = true;
+            else if (aResult.getID() == 123456788 || aResult.getID() == 123456787)
+                esito = false;
+        }
+        Assert.assertFalse(esito);
+    }
 
     /*
     Delete the elements inserted for the testPerimeter
