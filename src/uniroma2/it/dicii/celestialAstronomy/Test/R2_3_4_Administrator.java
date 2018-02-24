@@ -64,7 +64,7 @@ public class R2_3_4_Administrator {
     public void updateFile(){
         int control;
         FileRepository.insertFilamentFile(CsvFileBean.getAbsolutePath()+"testFilament",0,0);
-        FileRepository.insertPerimeterFile(CsvFileBean.getAbsolutePath()+"test",0,0);
+        FileRepository.insertPerimeterFile(CsvFileBean.getAbsolutePath()+"testPerimeter",0,0);
         control = FileRepository.insertPerimeterFile(CsvFileBean.getAbsolutePath()+"testUpdated",0,0);
         Assert.assertNotEquals(control, 0);
     }

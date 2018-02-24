@@ -21,7 +21,7 @@ public class FileController {
                 break;
             case "filamenti": elementsUpdated =  FileRepository.insertFilamentFile(pathname, bean.getNumrows(), bean.getOffset());
                 break;
-            case "stelle": elementsUpdated =  FileRepository.insertStarFile(pathname, bean.getNumrows(), bean.getOffset());
+            case "stelle": elementsUpdated =  FileRepository.insertStarFile(pathname, bean.getNumrows(), bean.getOffset(), "contorni_filamenti_Herschel.csv");
                 break;
             default: elementsUpdated = 0;
         }

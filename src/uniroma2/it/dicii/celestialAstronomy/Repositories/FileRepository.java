@@ -241,8 +241,8 @@ public class FileRepository {
     number of rows means ALL row
     @ Return number of tuples read
      */
-    public static int insertStarFile(String pathnameStar, int numRows, int offset){
-        String pathnameFilament = CsvFileBean.getAbsolutePath()+"contorni_filamenti_Herschel.csv";
+    public static int insertStarFile(String pathnameStar, int numRows, int offset, String pathPerimeter){
+        String pathnameFilament = CsvFileBean.getAbsolutePath()+pathPerimeter;
         Connection connection = null;
         Statement statement = null;
 
@@ -303,34 +303,32 @@ public class FileRepository {
                     String linePerimeter;
                     int esitoPerimeter=0;
                     while((linePerimeter = brPerimeter.readLine()) != null) {
-
                         // String array of element of one tuple
                         CurrentTuplePerimeter = linePerimeter.split(cvsSplitter);
                         if (esitoPerimeter != 0) {
                             CurrentFilamentID = CurrentTuplePerimeter[0];
-                            if (!CurrentFilamentID.equals(BeforeFilamentID)) {
-                                if ((abs(sumValue)) >= Math.toRadians(0.01)) {
-                                    if(!FilamentRepository.searchFilament(BeforeFilamentID))
-                                        throw new ImportFileException();
-                                    String insertUpdateInclusione = "INSERT INTO inclusione (filamento, stella)" +
-                                            " VALUES ('" + BeforeFilamentID + "', '" + tupleStar[0] + "')" +
-                                            " ON CONFLICT (filamento, stella) DO UPDATE " +
-                                            " SET filamento = excluded.filamento, stella=excluded.stella";
-                                    statement.executeUpdate(insertUpdateInclusione);
-                                    esitoInsert++;
-                                }
-                                sumValue = 0;
-                            } else {
+                            if (CurrentFilamentID.equalsIgnoreCase(BeforeFilamentID)) {
                                 numerator = (Double.parseDouble(BeforeTuplePerimeter[1]) - Double.parseDouble(tupleStar[2])) * (Double.parseDouble(CurrentTuplePerimeter[2]) - Double.parseDouble(tupleStar[3])) -
                                         (Double.parseDouble(BeforeTuplePerimeter[2]) - Double.parseDouble(tupleStar[3])) * (Double.parseDouble(CurrentTuplePerimeter[1]) - Double.parseDouble(tupleStar[2]));
                                 denominator = (Double.parseDouble(BeforeTuplePerimeter[1]) - Double.parseDouble(tupleStar[2])) * (Double.parseDouble(CurrentTuplePerimeter[1]) - Double.parseDouble(tupleStar[2])) +
                                         (Double.parseDouble(BeforeTuplePerimeter[2]) - Double.parseDouble(tupleStar[3])) * (Double.parseDouble(CurrentTuplePerimeter[2]) - Double.parseDouble(tupleStar[3]));
-                                sumValue += atan(Math.toRadians(numerator / denominator));
+                                double angle = atan(numerator / denominator);
+                                sumValue += angle;
                             }
                             BeforeFilamentID = CurrentFilamentID;
                             BeforeTuplePerimeter = CurrentTuplePerimeter;
                         }
                         esitoPerimeter++;
+                    }
+                    if ((abs(Math.toRadians(sumValue))) >= 0.01) {
+                        if(!FilamentRepository.searchFilament(BeforeFilamentID))
+                            throw new ImportFileException();
+                        String insertUpdateInclusione = "INSERT INTO inclusione (filamento, stella)" +
+                                " VALUES ('" + BeforeFilamentID + "', '" + tupleStar[0] + "')" +
+                                " ON CONFLICT (filamento, stella) DO UPDATE " +
+                                " SET filamento = excluded.filamento, stella=excluded.stella";
+                        statement.executeUpdate(insertUpdateInclusione);
+                        esitoInsert++;
                     }
                     brPerimeter.close();
                 }
@@ -338,6 +336,7 @@ public class FileRepository {
             }
             // Chiusura della connessione e del buffer
             brStar.close();
+
         } catch (ClassNotFoundException | SQLException | IOException | ImportFileException e) {
             e.printStackTrace();
             esitoInsert = -1;

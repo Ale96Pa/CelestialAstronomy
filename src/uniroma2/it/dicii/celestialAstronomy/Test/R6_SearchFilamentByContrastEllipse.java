@@ -6,7 +6,9 @@ import org.junit.Before;
 import org.junit.Test;
 import uniroma2.it.dicii.celestialAstronomy.Control.FilamentController;
 import uniroma2.it.dicii.celestialAstronomy.Model.Filament;
+import uniroma2.it.dicii.celestialAstronomy.Repositories.FileRepository;
 import uniroma2.it.dicii.celestialAstronomy.Repositories.Utility.UtenteDao;
+import uniroma2.it.dicii.celestialAstronomy.View.CsvFileBean;
 import uniroma2.it.dicii.celestialAstronomy.View.FilamentBean;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,42 +28,14 @@ public class R6_SearchFilamentByContrastEllipse {
     */
     @Before
     public void insertData(){
-        Connection connection;
-        Statement statement;
+        String path1 = CsvFileBean.getAbsolutePath()+"testFilament";
+        FileRepository.insertFilamentFile(path1,0,0);
 
-        try
-        {
-            // Caricamento del Driver
-            String driver = UtenteDao.getDriverClassName();
-            Class.forName(driver);
-            // Creazione della Connessione
-            String urlDB = UtenteDao.getDbUrl();
-            String username = UtenteDao.getUSER();
-            String password = UtenteDao.getPASS();
-            connection = DriverManager.getConnection(urlDB, username, password);
-            // Creazione dello Statement per le interrogazioni
-            statement = connection.createStatement();
+        String path2 = CsvFileBean.getAbsolutePath()+"testPerimeter";
+        FileRepository.insertPerimeterFile(path2,0,0);
 
-            // Scrittura dell'istruzione CRUD sql
-            String insert1 = "INSERT INTO filamento(id, nome, flussototale, densita, temperatura, ellitticita, contrasto) " +
-                    " VALUES ('123456789' , 'aaB' , '0' , ' 0 ' , ' 0', '2', '1.2')";
-            String insert2 = "INSERT INTO filamento(id, nome, flussototale, densita, temperatura, ellitticita, contrasto) " +
-                    " VALUES ('123456788' , 'aaC' , '0' , ' 0 ' , ' 0', '4', '1.3')";
-            String insert3 = "INSERT INTO filamento(id, nome, flussototale, densita, temperatura, ellitticita, contrasto) " +
-                    " VALUES ('123456787' , 'aaD' , '0' , ' 0 ' , ' 0', '6', '0.7')";
-            String insert4 = "INSERT INTO filamento(id, nome, flussototale, densita, temperatura, ellitticita, contrasto) " +
-                    " VALUES ('123456786' , 'aaE' , '0' , ' 0 ' , ' 0', '8', '2.3')";
-            statement.executeUpdate(insert1);
-            statement.executeUpdate(insert2);
-            statement.executeUpdate(insert3);
-            statement.executeUpdate(insert4);
-
-            // Chiusura della connessione
-            connection.close();
-            statement.close();
-        } catch(ClassNotFoundException |SQLException e) {
-            e.printStackTrace();
-        }
+        String path3 = CsvFileBean.getAbsolutePath()+"testSegment";
+        FileRepository.insertSkeletonFile(path3,0,0);
     }
 
     /*
@@ -104,7 +78,7 @@ public class R6_SearchFilamentByContrastEllipse {
     }
 
     /*
-    Delete the elements inserted for the test
+    Delete the elements inserted for the testPerimeter
      */
     @After
     public void deleteData(){

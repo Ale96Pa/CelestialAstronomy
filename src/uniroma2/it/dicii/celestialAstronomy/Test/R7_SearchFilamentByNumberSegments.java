@@ -6,7 +6,9 @@ import org.junit.Before;
 import org.junit.Test;
 import uniroma2.it.dicii.celestialAstronomy.Control.FilamentController;
 import uniroma2.it.dicii.celestialAstronomy.Model.Filament;
+import uniroma2.it.dicii.celestialAstronomy.Repositories.FileRepository;
 import uniroma2.it.dicii.celestialAstronomy.Repositories.Utility.UtenteDao;
+import uniroma2.it.dicii.celestialAstronomy.View.CsvFileBean;
 import uniroma2.it.dicii.celestialAstronomy.View.FilamentBean;
 
 import java.sql.Connection;
@@ -25,62 +27,14 @@ public class R7_SearchFilamentByNumberSegments {
     */
     @Before
     public void insertData(){
-        Connection connection;
-        Statement statement;
+        String path1 = CsvFileBean.getAbsolutePath()+"testFilament";
+        FileRepository.insertFilamentFile(path1,0,0);
 
-        try
-        {
-            // Caricamento del Driver
-            String driver = UtenteDao.getDriverClassName();
-            Class.forName(driver);
-            // Creazione della Connessione
-            String urlDB = UtenteDao.getDbUrl();
-            String username = UtenteDao.getUSER();
-            String password = UtenteDao.getPASS();
-            connection = DriverManager.getConnection(urlDB, username, password);
-            // Creazione dello Statement per le interrogazioni
-            statement = connection.createStatement();
+        String path2 = CsvFileBean.getAbsolutePath()+"testPerimeter";
+        FileRepository.insertPerimeterFile(path2,0,0);
 
-            // Scrittura dell'istruzione CRUD sql
-            String insert0 = "INSERT INTO filamento(id, nome, flussototale, densita, temperatura, ellitticita, contrasto) " +
-                    " VALUES ('123456789 ' , 'aa' , '0' , ' 0 ' , ' 0', '0', '0')";
-            String insert1 = "INSERT INTO filamento(id, nome, flussototale, densita, temperatura, ellitticita, contrasto) " +
-                    " VALUES ('123456788 ' , 'aa' , '0' , ' 0 ' , ' 0', '0', '0')";
-
-            String insert2 = "INSERT INTO strutturagalattica(filamento, longitudine, latitudine, tipo)" +
-                    "VALUES ('123456789', 0, 0, 'SEG') ";
-            String insert3 = "INSERT INTO strutturagalattica(filamento, longitudine, latitudine, tipo)" +
-                    "VALUES ('123456789', 1, 1, 'SEG') ";
-            String insert4 = "INSERT INTO strutturagalattica(filamento, longitudine, latitudine, tipo)" +
-                    "VALUES ('123456789', 3, 3, 'SEG') ";
-            String insert5 = "INSERT INTO strutturagalattica(filamento, longitudine, latitudine, tipo)" +
-                    "VALUES ('123456788', 2, 2, 'SEG') ";
-
-            String insert6 = "INSERT INTO segmento(id, longitudine, latitudine,flusso, tipo, nprogressivo)" +
-                    "VALUES ('1111111', 0, 0, 0, 'B', 1) ";
-            String insert7 = "INSERT INTO segmento(id, longitudine, latitudine,flusso, tipo, nprogressivo)" +
-                    "VALUES ('1111112', 1, 1, 0, 'B', 2 ) ";
-            String insert8 = "INSERT INTO segmento(id, longitudine, latitudine,flusso, tipo, nprogressivo)" +
-                    "VALUES ('1111113', 2, 2, 0, 'B', 2 ) ";
-            String insert9 = "INSERT INTO segmento(id, longitudine, latitudine,flusso, tipo, nprogressivo)" +
-                    "VALUES ('1111114', 3, 3, 0, 'B', 2 ) ";
-            statement.executeUpdate(insert0);
-            statement.executeUpdate(insert1);
-            statement.executeUpdate(insert2);
-            statement.executeUpdate(insert3);
-            statement.executeUpdate(insert4);
-            statement.executeUpdate(insert5);
-            statement.executeUpdate(insert6);
-            statement.executeUpdate(insert7);
-            statement.executeUpdate(insert8);
-            statement.executeUpdate(insert9);
-
-            // Chiusura della connessione
-            connection.close();
-            statement.close();
-        } catch(ClassNotFoundException |SQLException e) {
-            e.printStackTrace();
-        }
+        String path3 = CsvFileBean.getAbsolutePath()+"testSegment";
+        FileRepository.insertSkeletonFile(path3,0,0);
     }
 
 
@@ -121,7 +75,7 @@ public class R7_SearchFilamentByNumberSegments {
     }
 
     /*
-    Delete the elements inserted for the test
+    Delete the elements inserted for the testPerimeter
      */
     @After
     public void deleteData(){
