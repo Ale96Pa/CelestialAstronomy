@@ -5,6 +5,11 @@ import uniroma2.it.dicii.celestialAstronomy.Repositories.Utility.UtenteDao;
 import java.time.LocalDate;
 import java.sql.*;
 
+/**
+ * In this repository there are all updates of data from user-input to database.
+ * Here the access to database and the mapping from RELATIONAL to OBJECT ORIENTED concepts are managed (DAO).
+ */
+
 public class SatelliteRepository {
 
     /*

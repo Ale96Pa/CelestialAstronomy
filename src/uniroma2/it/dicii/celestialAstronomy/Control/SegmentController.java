@@ -5,6 +5,12 @@ import uniroma2.it.dicii.celestialAstronomy.Repositories.SegmentRepository;
 import uniroma2.it.dicii.celestialAstronomy.View.SegmentBean;
 import java.util.ArrayList;
 
+/**
+ * In this class you can find all methods to control actions and data related to Segment concept.
+ * Here the validation and control of data is managed.
+ * The models are used to notify the View about changes.
+ */
+
 public class SegmentController {
 
     /*

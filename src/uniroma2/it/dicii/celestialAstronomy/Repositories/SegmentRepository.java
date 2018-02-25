@@ -5,6 +5,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * In this repository there are all queries used in the software related to Segment.
+ * Here the access to database and the mapping from RELATIONAL to OBJECT ORIENTED concepts are managed (DAO).
+ */
+
 public class SegmentRepository {
 
     /*

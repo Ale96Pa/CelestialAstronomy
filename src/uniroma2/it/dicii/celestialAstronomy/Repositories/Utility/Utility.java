@@ -1,5 +1,9 @@
 package uniroma2.it.dicii.celestialAstronomy.Repositories.Utility;
 
+/**
+ * In this class there are some useful methods used in the software.
+ */
+
 public class Utility {
 
     /*

@@ -9,6 +9,11 @@ import java.util.Objects;
 import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
 import static java.lang.Math.sqrt;
 
+/**
+ * In this repository there are all queries used in the software related to Filament.
+ * Here the access to database and the mapping from RELATIONAL to OBJECT ORIENTED concepts are managed (DAO).
+ */
+
 public class FilamentRepository {
 
     /*

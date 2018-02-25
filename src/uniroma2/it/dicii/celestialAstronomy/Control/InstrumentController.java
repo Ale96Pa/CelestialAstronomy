@@ -3,10 +3,16 @@ package uniroma2.it.dicii.celestialAstronomy.Control;
 import uniroma2.it.dicii.celestialAstronomy.Repositories.InstrumentRepository;
 import uniroma2.it.dicii.celestialAstronomy.View.InstrumentBean;
 
+/**
+ * In this class you can find all methods to control actions and data related to Instrument concept.
+ * Here the validation and control of data is managed.
+ * Here the insert of elements in the database is managed.
+ */
+
 public class InstrumentController {
 
     /*
-    Insert a new instrument in the database, updating also the tables "BANDA" and "CATTURA" if necessary
+    Insert a new instrument in the database (one insert for each valid band)
      */
     public static synchronized boolean registerInstrument(InstrumentBean bean){
         boolean esito = false;

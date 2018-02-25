@@ -11,6 +11,11 @@ import java.util.Objects;
 import static java.lang.Math.abs;
 import static java.lang.Math.atan;
 
+/**
+ * In this repository there are all updates of data from csv file to database.
+ * Here the access to database and the mapping from RELATIONAL to OBJECT ORIENTED concepts are managed (DAO).
+ */
+
 public class FileRepository {
 
     /*

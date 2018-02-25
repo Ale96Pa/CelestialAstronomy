@@ -12,10 +12,16 @@ import uniroma2.it.dicii.celestialAstronomy.View.RegionBean;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * In this class you can find all methods to control actions and data related to Filament concept.
+ * Here the validation of data is managed for each function.
+ * The models are used to notify the View about changes.
+ */
+
 public class FilamentController {
 
     /*
-    Return the centroide (as a particular GalaxyPosition) of a filament given in input
+    Return the centroide (as a GalaxyPosition) of a filament given in input
     {for REQ-FN-5}
      */
     public static GalaxyPosition findCentroide(FilamentBean bean){
@@ -52,7 +58,8 @@ public class FilamentController {
                 throw new WrongDataException();
             else if(bean.getMinEllipse() > bean.getMaxEllipse())
                 throw new WrongDataException();
-            return FilamentRepository.findFilamentByContrastAndEllipse(bean.getBrillance(), bean.getMinEllipse(), bean.getMaxEllipse(),offset);
+            return FilamentRepository.findFilamentByContrastAndEllipse(bean.getBrillance(), bean.getMinEllipse(),
+                    bean.getMaxEllipse(),offset);
         } catch (WrongDataException e){
             e.printStackTrace();
             return new ArrayList<>();
@@ -79,7 +86,8 @@ public class FilamentController {
                 throw new WrongDataException();
             else if(bean.getMinNumOfSegment() > bean.getMaxNumOfSegment())
                 throw new WrongDataException();
-            return FilamentRepository.findFilamentsByNumOfSegments(bean.getMinNumOfSegment(), bean.getMaxNumOfSegment(), offset);
+            return FilamentRepository.findFilamentsByNumOfSegments(bean.getMinNumOfSegment(), bean.getMaxNumOfSegment(),
+                    offset);
         } catch (WrongDataException e){
             e.printStackTrace();
             return new ArrayList<>();
@@ -96,9 +104,11 @@ public class FilamentController {
                 throw new WrongDataException();
             ArrayList<Filament> filaments;
             if(Objects.equals(bean.getType(), "square"))
-                filaments = FilamentRepository.findFilamentInSquare(bean.getLongitudeCenter(), bean.getLatitudeCenter(), bean.getSideOrRadius());
+                filaments = FilamentRepository.findFilamentInSquare(bean.getLongitudeCenter(), bean.getLatitudeCenter(),
+                        bean.getSideOrRadius());
             else
-                filaments = FilamentRepository.findFilamentInCircle(bean.getLongitudeCenter(), bean.getLatitudeCenter(), bean.getSideOrRadius());
+                filaments = FilamentRepository.findFilamentInCircle(bean.getLongitudeCenter(), bean.getLatitudeCenter(),
+                        bean.getSideOrRadius());
             return filaments;
         } catch (WrongDataException e){
             e.printStackTrace();

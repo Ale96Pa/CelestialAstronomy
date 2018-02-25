@@ -5,6 +5,11 @@ import uniroma2.it.dicii.celestialAstronomy.Model.Utente;
 import uniroma2.it.dicii.celestialAstronomy.Repositories.Utility.UtenteDao;
 import java.sql.*;
 
+/**
+ * In this repository there are all queries used in the software related to User.
+ * Here the access to database and the mapping from RELATIONAL to OBJECT ORIENTED concepts are managed (DAO).
+ */
+
 public class UserRepository {
 
     /*

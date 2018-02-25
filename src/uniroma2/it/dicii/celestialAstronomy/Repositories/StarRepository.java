@@ -9,6 +9,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
+/**
+ * In this repository there are all queries used in the software related to Star.
+ * Here the access to database and the mapping from RELATIONAL to OBJECT ORIENTED concepts are managed (DAO).
+ */
+
 public class StarRepository {
 
     /*
