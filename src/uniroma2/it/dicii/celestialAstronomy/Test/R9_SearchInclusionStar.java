@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class R9_SearchInclusionStar {
 
     /*
-    Insert new informations' filament to verify the correct execution
+    Insert new informations' filament and stars to verify the correct execution
     Data inserted:
     * Filament with id: 123456789 with perimeter defined by the following points: (2,5), (-2,1), (-2,5) and (3,1)
     * Star: 1111111 in (-1,2) (included in the filament)

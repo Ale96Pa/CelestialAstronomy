@@ -20,8 +20,12 @@ import java.util.ArrayList;
 public class R10_RateOfStars {
 
     /*
-    Insert new informations' filament to verify the correct execution
-    [... metti dati da inserire ...]
+    Insert new informations' star to verify the correct execution
+    Data inserted:
+    * Filament 123456789 with perimeter defined by: (2,5), (-2,1), (-2,5) and (3,1)
+    * Star 1111111 in (-1,2)
+    * Star 1111112 in (7,7)
+    * Star  1111113 in (20,20)
      */
     @Before
     public void insertData(){
@@ -36,7 +40,7 @@ public class R10_RateOfStars {
     }
 
     /*
-    ...
+    Find the stars included in rectangle (both in filaments and out of filaments)
      */
     @Test
     public void test(){
@@ -73,7 +77,19 @@ public class R10_RateOfStars {
     /*
     Verify the execution of Exception in case of wrong input: base = 0
      */
-//    @Test
+    @Test
+    public void irregularTest(){
+        boolean esito;
+        RegionBean regionBean = new RegionBean();
+        regionBean.setLongitudeCenter(0);
+        regionBean.setLatitudeCenter(0);
+        regionBean.setBase(0);
+        regionBean.setHigh(15);
+        ArrayList<Star> starsInRectangle = StarController.findStarInRectangle(regionBean);
+        esito = starsInRectangle.size() != 0;
+        Assert.assertFalse(esito);
+    }
+
 
     /*
     Delete the elements inserted for the testPerimeter
