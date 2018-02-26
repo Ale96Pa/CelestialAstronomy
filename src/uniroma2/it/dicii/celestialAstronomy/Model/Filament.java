@@ -11,7 +11,6 @@ public class Filament {
     private double ellipse;
     private double constrast;
 
-
     private int numOfSegments;
 
     // Costruttore

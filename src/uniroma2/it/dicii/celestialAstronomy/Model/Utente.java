@@ -45,4 +45,3 @@ public class Utente {
         return administrator;
     }
 }
-

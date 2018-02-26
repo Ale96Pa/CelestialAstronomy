@@ -12,7 +12,6 @@ public class Extension {
         this.latitudinalExtension = latitudinalExtension;
     }
 
-
     // Metodi
     public double getLongitudinalExtension() {
         return longitudinalExtension;
