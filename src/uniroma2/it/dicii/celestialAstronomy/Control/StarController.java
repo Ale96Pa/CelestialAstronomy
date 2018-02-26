@@ -60,7 +60,7 @@ public class StarController {
     Return the list of stars included both in a rectangle and in a filament
     {for REQ-FN-10}
      */
-    private static ArrayList<Star> findStarInRectangleAndFilament(RegionBean bean) {
+    public static ArrayList<Star> findStarInRectangleAndFilament(RegionBean bean) {
         try{
             if(bean.getBase()<=0 || bean.getHigh()<=0)
                 throw new WrongDataException();

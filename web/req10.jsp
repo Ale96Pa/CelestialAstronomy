@@ -3,6 +3,8 @@
 <%@ page import="uniroma2.it.dicii.celestialAstronomy.Control.StarController" %>
 <%@ page import="java.util.HashMap" %>
 <%@ page import="uniroma2.it.dicii.celestialAstronomy.Repositories.Utility.TypeOfStars" %>
+<%@ page import="uniroma2.it.dicii.celestialAstronomy.Exception.NoDataFoundException" %>
+<%@ page import="uniroma2.it.dicii.celestialAstronomy.Exception.WrongDataException" %>
 <%--
   Created by IntelliJ IDEA.
   User: Alessandro
@@ -69,61 +71,86 @@
 </html>
 
 
-<% if(request.getParameter("query")!= null){
-    ArrayList<Star> starsInRectangle = StarController.findStarInRectangle(regionBean);
-    if(regionBean.getBase()<=0 || regionBean.getHigh()<=0){
-        %><p class="text-info"> <I><U><h3>
-        <span style="color: red; ">  Base and High cannot be NEGATIVE or ZERO!  </span>
-        </h3></U></I></p>
-    <%} else if(starsInRectangle.size() == 0){
-        %><p class="text-info"> <I><U><h3>
-        <span style="color: red; "> There aren't stars with required feaures !</span>
-        </h3> </U></I></p>
-    <%}else {
-        HashMap rateByTypeInFilament = StarController.rateByTypeInFilament(regionBean);
-        HashMap rateByTypeOutFilament = StarController.rateByTypeOutFilament(regionBean);
-        ArrayList<Star> outerStars = StarController.findStarOutOfFilament(regionBean);
-        double rateOuterStar = (double) outerStars.size()/starsInRectangle.size()*100;
-        double rateInnerStar = (double) 100-rateOuterStar;
-    %> <fieldset>
-        <legend> <h4>Found <% out.print(rateOuterStar); %> % of stars OUT of filaments </h4></legend> <%
-        for(TypeOfStars allType : TypeOfStars.values()){
-            String key = allType.toString();
-            Double value = (Double) rateByTypeOutFilament.get(key);
-            out.println(key + ":  " + value + "  %");
-    %> <br> <%
-        } %>
-    </fieldset>
-    <fieldset>
-        <legend> <h4>Found <% out.print(rateInnerStar); %> % of stars INTO filaments </h4></legend> <%
-        for(TypeOfStars allType : TypeOfStars.values()){
-            String key = allType.toString();
-            Double value = (Double) rateByTypeInFilament.get(key);
-            out.println(key + ":  " + value + "  %");
-    %> <br> <%
-        } %>
-    </fieldset>
-    <br><br>
-    <table border="2">
-        <tr>
-            <th>ID </th>
-            <th>Name </th>
-            <th>Type </th>
-            <th>Flux </th>
-            <th>Longitude </th>
-            <th>Latitude</th>
-        </tr> <%
-        for (Star aStarsInRectangle : starsInRectangle) {
-        %>
-        <tr>
-            <td><% out.print(aStarsInRectangle.getID()); %></td>
-            <td><% out.print(aStarsInRectangle.getName()); %></td>
-            <td><% out.print(aStarsInRectangle.getType()); %></td>
-            <td><% out.print(aStarsInRectangle.getFlux()); %></td>
-            <td><% out.print(aStarsInRectangle.getLongitude()); %></td>
-            <td><% out.print(aStarsInRectangle.getLatitude()); %></td>
-        </tr>
-        <%}%>
-    </table> <%
-    }
-}%>
+<%try {
+    if(request.getParameter("query")!= null){
+        //ArrayList<Star> starsInRectangle = StarController.findStarInRectangle(regionBean);
+        if(regionBean.getBase()<=0 || regionBean.getHigh()<=0){
+            %><p class="text-info"> <I><U><h3>
+            <span style="color: red; ">  Base and High cannot be NEGATIVE or ZERO!  </span>
+            </h3></U></I></p>
+            <% throw new WrongDataException();
+        }else {
+            HashMap rateByTypeInFilament = StarController.rateByTypeInFilament(regionBean);
+            HashMap rateByTypeOutFilament = StarController.rateByTypeOutFilament(regionBean);
+
+            ArrayList<Star> outerStars = StarController.findStarOutOfFilament(regionBean);
+            ArrayList<Star> innerStars = StarController.findStarInRectangleAndFilament(regionBean);
+
+            if(outerStars.size() == 0 && innerStars.size() == 0){
+                %><p class="text-info"> <I><U><h3>
+                    <span style="color: red; "> There aren't stars with required feaures !</span>
+                </h3> </U></I></p>
+                <% throw new NoDataFoundException();
+            }
+
+            double rateOuterStar = (double) outerStars.size()/(outerStars.size()+innerStars.size())*100;
+            double rateInnerStar = (double) 100-rateOuterStar;
+            %><fieldset>
+                <legend> <h4>Found <% out.print(rateOuterStar); %> % of stars OUT of filaments </h4></legend> <%
+                for(TypeOfStars allType : TypeOfStars.values()){
+                    String key = allType.toString();
+                    Double value = (Double) rateByTypeOutFilament.get(key);
+                    out.println(key + ":  " + value + "  %");
+                %> <br> <%
+                } %>
+            </fieldset>
+            <fieldset>
+                <legend> <h4>Found <% out.print(rateInnerStar); %> % of stars INTO filaments </h4></legend> <%
+                for(TypeOfStars allType : TypeOfStars.values()){
+                    String key = allType.toString();
+                    Double value = (Double) rateByTypeInFilament.get(key);
+                    out.println(key + ":  " + value + "  %");
+            %> <br> <%
+                } %>
+            </fieldset>
+            <br><br>
+            <table border="2">
+                <tr>
+                    <th>ID </th>
+                    <th>Name </th>
+                    <th>Type </th>
+                    <th>Flux </th>
+                    <th>Longitude </th>
+                    <th>Latitude</th>
+                    <th>Included into a filament </th>
+                </tr> <%
+                for (Star aStarsInRectangle : outerStars) {
+            %>
+                <tr>
+                    <td><% out.print(aStarsInRectangle.getID()); %></td>
+                    <td><% out.print(aStarsInRectangle.getName()); %></td>
+                    <td><% out.print(aStarsInRectangle.getType()); %></td>
+                    <td><% out.print(aStarsInRectangle.getFlux()); %></td>
+                    <td><% out.print(aStarsInRectangle.getLongitude()); %></td>
+                    <td><% out.print(aStarsInRectangle.getLatitude()); %></td>
+                    <td><% out.print("NO"); %></td>
+                </tr>
+                <%}
+                    for (Star aStarsInRectangle : innerStars) {
+                %>
+                <tr>
+                    <td><% out.print(aStarsInRectangle.getID()); %></td>
+                    <td><% out.print(aStarsInRectangle.getName()); %></td>
+                    <td><% out.print(aStarsInRectangle.getType()); %></td>
+                    <td><% out.print(aStarsInRectangle.getFlux()); %></td>
+                    <td><% out.print(aStarsInRectangle.getLongitude()); %></td>
+                    <td><% out.print(aStarsInRectangle.getLatitude()); %></td>
+                    <td><% out.print("YES"); %></td>
+                </tr>
+                <%}%>
+            </table> <%
+            }
+        }
+    } catch (WrongDataException | NoDataFoundException e){
+        e.printStackTrace();
+    }%>
