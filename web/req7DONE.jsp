@@ -47,7 +47,7 @@
         <label for="page">Choose a page to view:</label>
         <select name="page" id="page">
         <br> <%
-        for(int i=0; i< filamentBean.getPagese(); i++){
+        for(int i = 0; i< filamentBean.getPages(); i++){
             %><option value="<%= i %>"> Page <% out.print(i+1); %> </option><%
                 }
         %></select>

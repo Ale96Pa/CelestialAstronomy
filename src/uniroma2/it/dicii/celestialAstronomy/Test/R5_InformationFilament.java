@@ -23,7 +23,7 @@ public class R5_InformationFilament {
     Data inserted:
     * Filament with ID: 123456789;
     * Following points of perimeter: (11,5) (3,4) (2,5) (3,20)
-    * Following segments: 1111111 and 1111112
+    * Following segments: 1111111, 1111112 and 1111113
     */
     @Before
     public void insertData() {

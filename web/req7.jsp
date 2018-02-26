@@ -69,7 +69,7 @@
                     pages = ((totalResult - (totalResult%20))/20);
                     if(totalResult%20 != 0)
                         pages+=1;
-                    filamentBean.setPagese(pages);
+                    filamentBean.setPages(pages);
                         if(totalResult==0){
                             %><p class="text-info"> <I><U><h3>
                             <span style="color: red; "> No result found! </span>

@@ -10,8 +10,8 @@ public class FilamentBean {
     private static int minNumOfSegment;
     private static int maxNumOfSegment;
 
-    private static int pagese;
-    private static String order;
+    private static int pages; // number of pages necessary to paginate the results
+    private static String order; // type of order for REQ-FN-12 (order by Flux or Extension)
 
     // Metodi
     public static String getIdOrName() {
@@ -62,12 +62,12 @@ public class FilamentBean {
         FilamentBean.maxNumOfSegment = maxNumOfSegment;
     }
 
-    public static int getPagese() {
-        return pagese;
+    public static int getPages() {
+        return pages;
     }
 
-    public void setPagese(int page) {
-        FilamentBean.pagese = page;
+    public void setPages(int page) {
+        FilamentBean.pages = page;
     }
 
     public static String getOrder() {
