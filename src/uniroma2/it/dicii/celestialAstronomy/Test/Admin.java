@@ -36,11 +36,7 @@ public class Admin extends Thread {
             // Scrittura dell'istruzione CRUD sql
             String deleteInstrument =   "delete from strumento " +
                                         "where nome='TestInstrument'";
-
-            String deleteBand = "delete from banda " +
-                                "where valore = '7'";
             statement.executeUpdate(deleteInstrument);
-            statement.executeUpdate(deleteBand);
             // Chiusura della connessione
             connection.close();
             statement.close();

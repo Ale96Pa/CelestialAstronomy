@@ -21,9 +21,9 @@ public class User extends Thread {
         }
         FilamentBean filament = new FilamentBean();
         filament.setIdOrName("45");
-        FilamentController.findNumOfSegments(filament);
-        FilamentController.findCentroide(filament);
-        FilamentController.findExtension(filament);
+        filament.setMinNumOfSegment(3);
+        filament.setMaxNumOfSegment(8);
+        FilamentController.findFilamentBySegments(filament, -1);
         System.out.println("User " + id + " ends to use application");
     }
 }

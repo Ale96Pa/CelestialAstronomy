@@ -11,6 +11,8 @@ public class Filament {
     private double ellipse;
     private double constrast;
 
+    private GalaxyPosition centroide;
+    private Extension extension;
     private int numOfSegments;
 
     // Costruttore
@@ -72,6 +74,22 @@ public class Filament {
 
     public void setConstrast(double constrast) {
         this.constrast = constrast;
+    }
+
+    public GalaxyPosition getCentroide() {
+        return centroide;
+    }
+
+    public void setCentroide(GalaxyPosition centroide) {
+        this.centroide = centroide;
+    }
+
+    public Extension getExtension() {
+        return extension;
+    }
+
+    public void setExtension(Extension extension) {
+        this.extension = extension;
     }
 
     public int getNumOfSegments() {

@@ -385,7 +385,7 @@ public class StarRepository {
                             " FROM stella STAR join inclusione I ON STAR.id=I.stella join filamento F on " +
                                     "I.filamento = F.id join strutturagalattica SG on SG.filamento = F.id join " +
                                     "segmento SEG on (SG.longitudine, SG.latitudine)=(SEG.longitudine, SEG.latitudine)"+
-                            " WHERE SEG.tipo = 'B' and F.id = '" +filamentID + "' " +
+                            " WHERE SEG.tipo = 'S' and F.id = '" +filamentID + "' " +
                             " GROUP BY STAR.id ";
             if(order.equals("1"))
                 query+= " ORDER BY distance";

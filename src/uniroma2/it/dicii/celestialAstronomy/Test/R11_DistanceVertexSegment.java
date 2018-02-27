@@ -1,65 +1,53 @@
 package uniroma2.it.dicii.celestialAstronomy.Test;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import uniroma2.it.dicii.celestialAstronomy.Control.SegmentController;
+import uniroma2.it.dicii.celestialAstronomy.Repositories.FileRepository;
+import uniroma2.it.dicii.celestialAstronomy.Repositories.SegmentRepository;
 import uniroma2.it.dicii.celestialAstronomy.Repositories.Utility.UtenteDao;
+import uniroma2.it.dicii.celestialAstronomy.View.CsvFileBean;
+import uniroma2.it.dicii.celestialAstronomy.View.SegmentBean;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class R11_DistanceVertexSegment {
 
     /*
     Insert new informations' filament to verify the correct execution
-    [... metti dati da inserire ...]
+    Data inserted:
+    * Segment id: 1111115 with following points:
+    * (,)
      */
     @Before
     public void insertData(){
-        Connection connection;
-        Statement statement;
+        String path1 = CsvFileBean.getAbsolutePath()+"testFilament";
+        FileRepository.insertFilamentFile(path1,0,0);
 
-        try
-        {
-            // Caricamento del Driver
-            String driver = UtenteDao.getDriverClassName();
-            Class.forName(driver);
-            // Creazione della Connessione
-            String urlDB = UtenteDao.getDbUrl();
-            String username = UtenteDao.getUSER();
-            String password = UtenteDao.getPASS();
-            connection = DriverManager.getConnection(urlDB, username, password);
-            // Creazione dello Statement per le interrogazioni
-            statement = connection.createStatement();
+        String path2 = CsvFileBean.getAbsolutePath()+"testPerimeter";
+        FileRepository.insertPerimeterFile(path2,0,0);
 
-            // Scrittura dell'istruzione CRUD sql
-            String insert1 = "INSERT INTO filamento(id, nome, flussototale, densita, temperatura, ellitticita, contrasto) " +
-                    " VALUES ('123456789' , 'aaB' , '0' , ' 0 ' , ' 0', '2', '1.2')";
-            String insert2 = "INSERT INTO filamento(id, nome, flussototale, densita, temperatura, ellitticita, contrasto) " +
-                    " VALUES ('123456788' , 'aaC' , '0' , ' 0 ' , ' 0', '4', '1.3')";
-            String insert3 = "INSERT INTO filamento(id, nome, flussototale, densita, temperatura, ellitticita, contrasto) " +
-                    " VALUES ('123456787' , 'aaD' , '0' , ' 0 ' , ' 0', '6', '0.7')";
-            String insert4 = "INSERT INTO filamento(id, nome, flussototale, densita, temperatura, ellitticita, contrasto) " +
-                    " VALUES ('123456786' , 'aaE' , '0' , ' 0 ' , ' 0', '8', '2.3')";
-            statement.executeUpdate(insert1);
-            statement.executeUpdate(insert2);
-            statement.executeUpdate(insert3);
-            statement.executeUpdate(insert4);
-
-            // Chiusura della connessione
-            connection.close();
-            statement.close();
-        } catch(ClassNotFoundException |SQLException e) {
-            e.printStackTrace();
-        }
+        String path3 = CsvFileBean.getAbsolutePath()+"testSegment";
+        FileRepository.insertSkeletonFile(path3,0,0);
     }
 
     /*
-    Find centroide, extensione e number of segments of filament just inserted
      */
-//    @Test
+    @Test
+    public void test(){
+        SegmentBean segmentBean = new SegmentBean();
+        segmentBean.setID("1111115");
+
+        ArrayList<Double> distance = SegmentController.findDistanceOfSegment(segmentBean);
+        Assert.assertEquals(String.valueOf(distance.get(0)), "3.1622776601683795");
+        Assert.assertEquals(String.valueOf(distance.get(1)), "7.211102550927978");
+    }
 
     /*
     Delete the elements inserted for the testPerimeter
@@ -83,9 +71,12 @@ public class R11_DistanceVertexSegment {
             statement = connection.createStatement();
 
             // Scrittura dell'istruzione CRUD sql
-            String delete = "delete from filamento " +
-                    "where id='123456789' OR id='123456788' or id='123456787' or id='123456786'";
-            statement.executeUpdate(delete);
+            String delete1 = "delete from filamento " +
+                            "where nome='none'";
+            String delete2 = "delete from segmento "+
+                    "where id = '1111111' or id = '1111112' or id = '1111113' or id = '1111114' or id = '1111115'";
+            statement.executeUpdate(delete1);
+            statement.executeUpdate(delete2);
 
             // Chiusura della connessione
             connection.close();

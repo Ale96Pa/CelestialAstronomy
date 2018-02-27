@@ -1,14 +1,24 @@
 package uniroma2.it.dicii.celestialAstronomy.Test;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import uniroma2.it.dicii.celestialAstronomy.Control.FilamentController;
+import uniroma2.it.dicii.celestialAstronomy.Control.SegmentController;
+import uniroma2.it.dicii.celestialAstronomy.Model.Star;
+import uniroma2.it.dicii.celestialAstronomy.Repositories.FileRepository;
 import uniroma2.it.dicii.celestialAstronomy.Repositories.Utility.UtenteDao;
+import uniroma2.it.dicii.celestialAstronomy.View.CsvFileBean;
+import uniroma2.it.dicii.celestialAstronomy.View.FilamentBean;
+import uniroma2.it.dicii.celestialAstronomy.View.SegmentBean;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class R12_PositionStarBackbone {
 
@@ -18,48 +28,31 @@ public class R12_PositionStarBackbone {
      */
     @Before
     public void insertData(){
-        Connection connection;
-        Statement statement;
+        String path1 = CsvFileBean.getAbsolutePath()+"testFilament";
+        FileRepository.insertFilamentFile(path1,0,0);
 
-        try
-        {
-            // Caricamento del Driver
-            String driver = UtenteDao.getDriverClassName();
-            Class.forName(driver);
-            // Creazione della Connessione
-            String urlDB = UtenteDao.getDbUrl();
-            String username = UtenteDao.getUSER();
-            String password = UtenteDao.getPASS();
-            connection = DriverManager.getConnection(urlDB, username, password);
-            // Creazione dello Statement per le interrogazioni
-            statement = connection.createStatement();
+        String path2 = CsvFileBean.getAbsolutePath()+"testPerimeter";
+        FileRepository.insertPerimeterFile(path2,0,0);
 
-            // Scrittura dell'istruzione CRUD sql
-            String insert1 = "INSERT INTO filamento(id, nome, flussototale, densita, temperatura, ellitticita, contrasto) " +
-                    " VALUES ('123456789' , 'aaB' , '0' , ' 0 ' , ' 0', '2', '1.2')";
-            String insert2 = "INSERT INTO filamento(id, nome, flussototale, densita, temperatura, ellitticita, contrasto) " +
-                    " VALUES ('123456788' , 'aaC' , '0' , ' 0 ' , ' 0', '4', '1.3')";
-            String insert3 = "INSERT INTO filamento(id, nome, flussototale, densita, temperatura, ellitticita, contrasto) " +
-                    " VALUES ('123456787' , 'aaD' , '0' , ' 0 ' , ' 0', '6', '0.7')";
-            String insert4 = "INSERT INTO filamento(id, nome, flussototale, densita, temperatura, ellitticita, contrasto) " +
-                    " VALUES ('123456786' , 'aaE' , '0' , ' 0 ' , ' 0', '8', '2.3')";
-            statement.executeUpdate(insert1);
-            statement.executeUpdate(insert2);
-            statement.executeUpdate(insert3);
-            statement.executeUpdate(insert4);
+        String path3 = CsvFileBean.getAbsolutePath()+"testSegment";
+        FileRepository.insertSkeletonFile(path3,0,0);
 
-            // Chiusura della connessione
-            connection.close();
-            statement.close();
-        } catch(ClassNotFoundException |SQLException e) {
-            e.printStackTrace();
-        }
+        String path4 = CsvFileBean.getAbsolutePath()+"testStar";
+        FileRepository.insertStarFile(path4, 0, 0, "testPerimeter");
     }
 
     /*
-    Find centroide, extensione e number of segments of filament just inserted
      */
- //   @Test
+    @Test
+    public void test(){
+        FilamentBean filamentBean = new FilamentBean();
+        filamentBean.setIdOrName("123456789");
+        filamentBean.setOrder("1");
+
+        ArrayList<Star> stars = FilamentController.findStarsByDistanceFromBackbone(filamentBean, -1);
+        Assert.assertEquals(String.valueOf(stars.get(0).getDistanceFromBackbone()), "2.23606797749979");
+        Assert.assertEquals(String.valueOf(stars.get(1).getDistanceFromBackbone()), "5.656854249492381");
+    }
 
     /*
     Delete the elements inserted for the testPerimeter
@@ -84,8 +77,14 @@ public class R12_PositionStarBackbone {
 
             // Scrittura dell'istruzione CRUD sql
             String delete = "delete from filamento " +
-                    "where id='123456789' OR id='123456788' or id='123456787' or id='123456786'";
+                    "where nome = 'none'";
+            String delete2 = "delete from segmento "+
+                    "where id = '1111111' or id = '1111112' or id = '1111113' or id = '1111114' or id = '1111115'";
+            String delete3 = "delete from stella " +
+                    "where id = '1111111' or id= '1111112' or id = '1111113'";
             statement.executeUpdate(delete);
+            statement.executeUpdate(delete2);
+            statement.executeUpdate(delete3);
 
             // Chiusura della connessione
             connection.close();
