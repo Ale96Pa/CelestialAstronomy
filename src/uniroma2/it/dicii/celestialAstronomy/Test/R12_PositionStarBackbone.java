@@ -24,8 +24,11 @@ public class R12_PositionStarBackbone {
 
     /*
     Insert new informations' filament to verify the correct execution
-    [... metti dati da inserire ...]
-     */
+    Data inserted:
+    * Filament id: 123456789 with segment 1111111 defined by the following points: (0,0), (1,1) and (3,3)
+    * Star id: 1111111 in (-1,2)
+    * Star id: 1111112 in (7,7)
+    */
     @Before
     public void insertData(){
         String path1 = CsvFileBean.getAbsolutePath()+"testFilament";
@@ -42,6 +45,7 @@ public class R12_PositionStarBackbone {
     }
 
     /*
+    Test the correct calculus of distance of star from the backbone based on data just inserted
      */
     @Test
     public void test(){
@@ -76,13 +80,11 @@ public class R12_PositionStarBackbone {
             statement = connection.createStatement();
 
             // Scrittura dell'istruzione CRUD sql
-            String delete = "delete from filamento " +
-                    "where nome = 'none'";
-            String delete2 = "delete from segmento "+
-                    "where id = '1111111' or id = '1111112' or id = '1111113' or id = '1111114' or id = '1111115'";
-            String delete3 = "delete from stella " +
-                    "where id = '1111111' or id= '1111112' or id = '1111113'";
-            statement.executeUpdate(delete);
+            String delete1 = "delete from filamento where nome = 'none'";
+            String delete2 = "delete from segmento where id = '1111111' or id = '1111112' or id = '1111113' or " +
+                                "id = '1111114' or id = '1111115'";
+            String delete3 = "delete from stella where id = '1111111' or id= '1111112' or id = '1111113'";
+            statement.executeUpdate(delete1);
             statement.executeUpdate(delete2);
             statement.executeUpdate(delete3);
 

@@ -42,9 +42,9 @@ public class R7_SearchFilamentByNumberSegments {
 
             // Scrittura dell'istruzione CRUD sql
             String insert0 = "INSERT INTO filamento(id, nome, flussototale, densita, temperatura, ellitticita, contrasto) " +
-                    " VALUES ('123456789 ' , 'aa' , '0' , ' 0 ' , ' 0', '0', '0')";
+                    " VALUES ('123456789 ' , 'none' , '0' , ' 0 ' , ' 0', '0', '0')";
             String insert1 = "INSERT INTO filamento(id, nome, flussototale, densita, temperatura, ellitticita, contrasto) " +
-                    " VALUES ('123456788 ' , 'aa' , '0' , ' 0 ' , ' 0', '0', '0')";
+                    " VALUES ('123456788 ' , 'none' , '0' , ' 0 ' , ' 0', '0', '0')";
 
             String insert2 = "INSERT INTO strutturagalattica(filamento, longitudine, latitudine, tipo)" +
                     "VALUES ('123456789', 0, 0, 'SEG') ";
@@ -141,7 +141,7 @@ public class R7_SearchFilamentByNumberSegments {
             // Creazione dello Statement per le interrogazioni
             statement = connection.createStatement();
             // Scrittura dell'istruzione CRUD sql
-            String delete0 = "delete from filamento where id='123456789' or id='123456788'";
+            String delete0 = "delete from filamento where nome='none'";
             String delete1 = "delete from strutturagalattica where filamento = '123456789' or filamento = '123456788' ";
             String delete2 = "delete from segmento where id='1111111' or id = '1111112' or id='1111113' or id='1111114'";
             statement.executeUpdate(delete0);

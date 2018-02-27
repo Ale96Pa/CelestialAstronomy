@@ -22,9 +22,9 @@ public class R11_DistanceVertexSegment {
     /*
     Insert new informations' filament to verify the correct execution
     Data inserted:
-    * Segment id: 1111115 with following points:
-    * (,)
-     */
+    * Filament 123456787 with perimeter defined by following points: (4,4), (5,5), (6,6) and (7,7)
+    * Segment id: 1111115 with following points: (3,1) and (3,20)
+    */
     @Before
     public void insertData(){
         String path1 = CsvFileBean.getAbsolutePath()+"testFilament";
@@ -38,6 +38,7 @@ public class R11_DistanceVertexSegment {
     }
 
     /*
+    Test the correct calculus of distance from segment's vertex to perimeter based on data just inserted
      */
     @Test
     public void test(){
@@ -71,10 +72,9 @@ public class R11_DistanceVertexSegment {
             statement = connection.createStatement();
 
             // Scrittura dell'istruzione CRUD sql
-            String delete1 = "delete from filamento " +
-                            "where nome='none'";
-            String delete2 = "delete from segmento "+
-                    "where id = '1111111' or id = '1111112' or id = '1111113' or id = '1111114' or id = '1111115'";
+            String delete1 = "delete from filamento where nome='none'";
+            String delete2 = "delete from segmento where id = '1111111' or id = '1111112' or id = '1111113' or " +
+                                "id = '1111114' or id = '1111115'";
             statement.executeUpdate(delete1);
             statement.executeUpdate(delete2);
 

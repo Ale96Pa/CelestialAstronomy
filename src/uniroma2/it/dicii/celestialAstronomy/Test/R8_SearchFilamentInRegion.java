@@ -119,11 +119,9 @@ public class R8_SearchFilamentInRegion {
             statement = connection.createStatement();
 
             // Scrittura dell'istruzione CRUD sql
-            String delete1 = "delete from filamento " +
-                            "where id='123456789' OR id='123456788' or id='123456787' ";
-            String delete2 = "delete from strutturagalattica " +
-                    "where filamento='123456789' OR filamento='123456788' or filamento='123456787' ";
-
+            String delete1 = "delete from filamento where id='123456789' OR id='123456788' or id='123456787' ";
+            String delete2 = "delete from strutturagalattica where filamento='123456789' OR filamento='123456788' or " +
+                                " filamento='123456787' ";
             statement.executeUpdate(delete1);
             statement.executeUpdate(delete2);
 

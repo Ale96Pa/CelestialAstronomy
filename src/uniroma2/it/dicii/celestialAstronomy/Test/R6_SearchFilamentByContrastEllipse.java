@@ -99,9 +99,11 @@ public class R6_SearchFilamentByContrastEllipse {
             statement = connection.createStatement();
 
             // Scrittura dell'istruzione CRUD sql
-            String delete = "delete from filamento " +
-                            "where id='123456789' OR id='123456788' or id='123456787' or id='123456786'";
-            statement.executeUpdate(delete);
+            String delete1 = "delete from filamento where nome = 'none'";
+            String delete2 = "delete from segmento where id='1111111' or id='1111112' or id='1111113' or id='1111114' "+
+                                "or id='1111115'";
+            statement.executeUpdate(delete1);
+            statement.executeUpdate(delete2);
 
             // Chiusura della connessione
             connection.close();

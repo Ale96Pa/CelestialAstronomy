@@ -10,9 +10,9 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
-<!-- Si dichiara la variabile userBean e istanzia un oggetto UserBean -->
+<!-- Si dichiara la variabile satelliteBean e istanzia un oggetto SatelliteBean -->
 <jsp:useBean id="satelliteBean" scope="request"  class="uniroma2.it.dicii.celestialAstronomy.View.SatelliteBean" />
-<!-- Mappa automaticamente tutti gli attributi dell'oggetto userBean -->
+<!-- Mappa automaticamente tutti gli attributi dell'oggetto satelliteBean -->
 <jsp:setProperty name="satelliteBean" property="*"/>
 
 <%

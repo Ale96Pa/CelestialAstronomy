@@ -122,7 +122,6 @@ public class R10_RateOfStars {
             statement.executeUpdate(delete3);
             statement.executeUpdate(delete4);
 
-
             // Chiusura della connessione
             connection.close();
             statement.close();

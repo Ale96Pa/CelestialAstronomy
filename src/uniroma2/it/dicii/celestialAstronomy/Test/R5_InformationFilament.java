@@ -34,7 +34,7 @@ public class R5_InformationFilament {
         FileRepository.insertPerimeterFile(path2,4,10);
 
         String path3 = CsvFileBean.getAbsolutePath()+"testSegment";
-        FileRepository.insertSkeletonFile(path3,0,0);
+        FileRepository.insertSkeletonFile(path3,3,4);
     }
 
 

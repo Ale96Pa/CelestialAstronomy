@@ -8,9 +8,9 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
-<!-- Si dichiara la variabile userBean e istanzia un oggetto UserBean -->
+<!-- Si dichiara la variabile instrumentBean e istanzia un oggetto InstrumentBean -->
 <jsp:useBean id="instrumentBean" scope="request"  class="uniroma2.it.dicii.celestialAstronomy.View.InstrumentBean" />
-<!-- Mappa automaticamente tutti gli attributi dell'oggetto userBean -->
+<!-- Mappa automaticamente tutti gli attributi dell'oggetto instrumentBean -->
 <jsp:setProperty name="instrumentBean" property="*"/>
 
 <%
