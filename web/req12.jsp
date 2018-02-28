@@ -60,7 +60,7 @@
             %><p class="text-info"> <I> <U> <h3>
             <span style="color: red; "> Filament isn't in Database !  </span>
             </h3> </U> </I> </p> <%
-            throw new WrongDataException();
+            throw new NoDataFoundException();
         } else {
                 ArrayList<Star> stars = FilamentController.findStarsByDistanceFromBackbone(filamentBean, -1);
                 totalResult = stars.size();
@@ -84,7 +84,7 @@
             <button><input type="hidden" name="offset"> Go! </button>
         </form> <%
     %>
-<%  }catch (WrongDataException | NoDataFoundException e){
+<%  }catch (NoDataFoundException e){
         e.printStackTrace();
     }
 }%>

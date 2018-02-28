@@ -1,5 +1,6 @@
 <%@ page import="uniroma2.it.dicii.celestialAstronomy.Control.FilamentController" %>
 <%@ page import="uniroma2.it.dicii.celestialAstronomy.Exception.WrongDataException" %>
+<%@ page import="uniroma2.it.dicii.celestialAstronomy.Exception.NoDataFoundException" %>
 <%--
   Created by IntelliJ IDEA.
   User: Alessandro
@@ -60,7 +61,7 @@
             %><p class="text-info"> <I><U><h3>
             <span style="color: red; "> Filament isn't in Database !  </span>
             </h3></U></I></p>
-            <% throw new WrongDataException();
+            <% throw new NoDataFoundException();
         } else {
             %><table border="2">
             <tr>
@@ -77,7 +78,7 @@
             </tr>
             </table>
 <%      }
-    }catch (WrongDataException e){
+    }catch (NoDataFoundException e){
         e.printStackTrace();
     }
 }%>
