@@ -17,7 +17,7 @@ import static java.lang.Math.atan;
  */
 
 public class FileRepository {
-
+    private static String idfilamentospeciale;
     /*
     Insert in database data depending on file about perimeter
     Update the table "STRUTTURA GALATTICA"
@@ -270,6 +270,7 @@ public class FileRepository {
             String lineStar;
             String cvsSplitter = ",";
             brStar = new BufferedReader(new FileReader(pathnameStar));
+
             sick = 0;
             while ((lineStar = brStar.readLine()) != null) {
                 // String array of element of one tuple
@@ -300,6 +301,7 @@ public class FileRepository {
                     String BeforeFilamentID = "";
                     String[] CurrentTuplePerimeter;
                     String[] BeforeTuplePerimeter = new String[0];
+
                     double numerator;
                     double denominator;
                     double sumValue =0;
@@ -320,21 +322,23 @@ public class FileRepository {
                                         (Double.parseDouble(BeforeTuplePerimeter[2]) - Double.parseDouble(tupleStar[3])) * (Double.parseDouble(CurrentTuplePerimeter[2]) - Double.parseDouble(tupleStar[3]));
                                 double angle = atan(numerator / denominator);
                                 sumValue += angle;
+                            } else {
+                                if ((abs(Math.toRadians(sumValue))) >= 0.01) {
+                                    if(!FilamentRepository.searchFilament(BeforeFilamentID))
+                                        throw new ImportFileException();
+                                    String insertUpdateInclusione = "INSERT INTO inclusione (filamento, stella)" +
+                                            " VALUES ('" + BeforeFilamentID + "', '" + tupleStar[0] + "')" +
+                                            " ON CONFLICT (filamento, stella) DO UPDATE " +
+                                            " SET filamento = excluded.filamento, stella=excluded.stella";
+                                    statement.executeUpdate(insertUpdateInclusione);
+                                    esitoInsert++;
+                                }
+                                sumValue=0;
                             }
                             BeforeFilamentID = CurrentFilamentID;
                             BeforeTuplePerimeter = CurrentTuplePerimeter;
                         }
                         esitoPerimeter++;
-                    }
-                    if ((abs(Math.toRadians(sumValue))) >= 0.01) {
-                        if(!FilamentRepository.searchFilament(BeforeFilamentID))
-                            throw new ImportFileException();
-                        String insertUpdateInclusione = "INSERT INTO inclusione (filamento, stella)" +
-                                " VALUES ('" + BeforeFilamentID + "', '" + tupleStar[0] + "')" +
-                                " ON CONFLICT (filamento, stella) DO UPDATE " +
-                                " SET filamento = excluded.filamento, stella=excluded.stella";
-                        statement.executeUpdate(insertUpdateInclusione);
-                        esitoInsert++;
                     }
                     brPerimeter.close();
                 }
