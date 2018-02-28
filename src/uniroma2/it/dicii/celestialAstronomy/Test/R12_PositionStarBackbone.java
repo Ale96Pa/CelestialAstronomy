@@ -41,7 +41,7 @@ public class R12_PositionStarBackbone {
         FileRepository.insertSkeletonFile(path3,0,0);
 
         String path4 = CsvFileBean.getAbsolutePath()+"testStar";
-        FileRepository.insertStarFile(path4, 0, 0, "testPerimeter");
+        FileRepository.insertStarFile2(path4, 0, 0, "testPerimeter");
     }
 
     /*

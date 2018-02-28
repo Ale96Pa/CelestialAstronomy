@@ -361,4 +361,118 @@ public class FileRepository {
         }
         return esitoInsert;
     }
+
+    public static int insertStarFile2(String pathnameStar, int numRows, int offset, String pathPerimeter){
+        String pathnameFilament = CsvFileBean.getAbsolutePath()+pathPerimeter;
+        Connection connection = null;
+        Statement statement = null;
+
+        int sick;
+        int esitoInsert = 0;
+        try {
+            // Caricamento del Driver
+            String driver = UtenteDao.getDriverClassName();
+            Class.forName(driver);
+            // Creazione della Connessione
+            String urlDB = UtenteDao.getDbUrl();
+            String username = UtenteDao.getUSER();
+            String password = UtenteDao.getPASS();
+            connection = DriverManager.getConnection(urlDB, username, password);
+            // Creazione dello Statement per le interrogazioni
+            statement = connection.createStatement();
+
+            // Estrazione dei dati dal file
+            BufferedReader brStar;
+            String lineStar;
+            String cvsSplitter = ",";
+            brStar = new BufferedReader(new FileReader(pathnameStar));
+
+            sick = 0;
+            while ((lineStar = brStar.readLine()) != null) {
+                // String array of element of one tuple
+                String[] tupleStar = lineStar.split(cvsSplitter);
+                // Insert of elements in database
+                String insertUpdate =   "INSERT INTO stella (id, longitudine, latitudine, nome, tipo, flusso)" +
+                        "VALUES ('" + tupleStar[0] + "', '"+ tupleStar[2] +"', '"+ tupleStar[3] + "', '"+
+                        tupleStar[1] + "', '"+ tupleStar[5] + "', '"+ tupleStar[4] + "')" +
+                        "ON CONFLICT (id) DO UPDATE " +
+                        " SET id = excluded.id, longitudine = excluded.longitudine , " +
+                        " latitudine = excluded.latitudine, nome= excluded.nome, " +
+                        " tipo = excluded.tipo, flusso = excluded.flusso";
+                if(sick!=0) {
+                    if(numRows == 0) // all rows
+                        statement.executeUpdate(insertUpdate);
+                    else {
+                        if(sick >= offset)
+                            statement.executeUpdate(insertUpdate);
+                        if(sick == offset+numRows)
+                            break;
+                    }
+                    statement.executeUpdate(insertUpdate);
+
+                    /*
+                    Update the table "INCLUSIONE" verifying given formula (REQ-FN-9)
+                    */
+                    String CurrentFilamentID;
+                    String BeforeFilamentID = "";
+                    String[] CurrentTuplePerimeter;
+                    String[] BeforeTuplePerimeter = new String[0];
+
+                    double numerator;
+                    double denominator;
+                    double sumValue =0;
+                    BufferedReader brPerimeter;
+                    brPerimeter = new BufferedReader(new FileReader(pathnameFilament));
+                    String linePerimeter;
+                    int esitoPerimeter=0;
+                    while((linePerimeter = brPerimeter.readLine()) != null) {
+                        // String array of element of one tuple
+                        CurrentTuplePerimeter = linePerimeter.split(cvsSplitter);
+                        if (esitoPerimeter != 0) {
+                            CurrentFilamentID = CurrentTuplePerimeter[0];
+                            if (CurrentFilamentID.equalsIgnoreCase(BeforeFilamentID)) {
+                                // Calculate the sum based on previous and current filament
+                                numerator = (Double.parseDouble(BeforeTuplePerimeter[1]) - Double.parseDouble(tupleStar[2])) * (Double.parseDouble(CurrentTuplePerimeter[2]) - Double.parseDouble(tupleStar[3])) -
+                                        (Double.parseDouble(BeforeTuplePerimeter[2]) - Double.parseDouble(tupleStar[3])) * (Double.parseDouble(CurrentTuplePerimeter[1]) - Double.parseDouble(tupleStar[2]));
+                                denominator = (Double.parseDouble(BeforeTuplePerimeter[1]) - Double.parseDouble(tupleStar[2])) * (Double.parseDouble(CurrentTuplePerimeter[1]) - Double.parseDouble(tupleStar[2])) +
+                                        (Double.parseDouble(BeforeTuplePerimeter[2]) - Double.parseDouble(tupleStar[3])) * (Double.parseDouble(CurrentTuplePerimeter[2]) - Double.parseDouble(tupleStar[3]));
+                                double angle = atan(numerator / denominator);
+                                sumValue += angle;
+                            }
+                            BeforeFilamentID = CurrentFilamentID;
+                            BeforeTuplePerimeter = CurrentTuplePerimeter;
+                        }
+                        esitoPerimeter++;
+                    }
+                    if ((abs(Math.toRadians(sumValue))) >= 0.01) {
+                        if(!FilamentRepository.searchFilament(BeforeFilamentID))
+                            throw new ImportFileException();
+                        String insertUpdateInclusione = "INSERT INTO inclusione (filamento, stella)" +
+                                " VALUES ('" + BeforeFilamentID + "', '" + tupleStar[0] + "')" +
+                                " ON CONFLICT (filamento, stella) DO UPDATE " +
+                                " SET filamento = excluded.filamento, stella=excluded.stella";
+                        statement.executeUpdate(insertUpdateInclusione);
+                        esitoInsert++;
+                    }
+                    brPerimeter.close();
+                }
+                sick++;
+            }
+            // Chiusura della connessione e del buffer
+            brStar.close();
+
+        } catch (ClassNotFoundException | SQLException | IOException | ImportFileException e) {
+            e.printStackTrace();
+            esitoInsert = -1;
+        }
+        finally {
+            try {
+                Objects.requireNonNull(connection).close();
+                Objects.requireNonNull(statement).close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return esitoInsert;
+    }
 }
