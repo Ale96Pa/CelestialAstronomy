@@ -18,7 +18,6 @@
 <jsp:setProperty name="starBean" property="filamentID"/>
 
 
-
 <html>
 <head>
     <title>Stars area</title>

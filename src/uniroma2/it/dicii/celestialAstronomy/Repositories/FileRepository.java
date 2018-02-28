@@ -313,6 +313,7 @@ public class FileRepository {
                         if (esitoPerimeter != 0) {
                             CurrentFilamentID = CurrentTuplePerimeter[0];
                             if (CurrentFilamentID.equalsIgnoreCase(BeforeFilamentID)) {
+                                // Calculate the sum based on previous and current filament
                                 numerator = (Double.parseDouble(BeforeTuplePerimeter[1]) - Double.parseDouble(tupleStar[2])) * (Double.parseDouble(CurrentTuplePerimeter[2]) - Double.parseDouble(tupleStar[3])) -
                                         (Double.parseDouble(BeforeTuplePerimeter[2]) - Double.parseDouble(tupleStar[3])) * (Double.parseDouble(CurrentTuplePerimeter[1]) - Double.parseDouble(tupleStar[2]));
                                 denominator = (Double.parseDouble(BeforeTuplePerimeter[1]) - Double.parseDouble(tupleStar[2])) * (Double.parseDouble(CurrentTuplePerimeter[1]) - Double.parseDouble(tupleStar[2])) +

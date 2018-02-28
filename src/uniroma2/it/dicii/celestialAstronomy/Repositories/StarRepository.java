@@ -193,7 +193,8 @@ public class StarRepository {
    @Parameter: filament's ID
    @Return: an HashMap built like <Key, Value> <---> <Type_Of_Star, number_Of_Stars_Of_That_Type>
     */
-    public static HashMap<String, Integer> findNumStarByTypeInRectangle(double longCenter, double latCenter, double base, double high){
+    public static HashMap<String, Integer> findNumStarByTypeInRectangle(double longCenter, double latCenter,
+                                                                        double base, double high){
         Connection connection = null;
         Statement statement = null;
         ResultSet result;
@@ -249,7 +250,8 @@ public class StarRepository {
     @Parameter: center's longitude and latitude, rectangle's base, rectangle's high, filament's ID
     @Return: list of Stars with required features
      */
-    public static ArrayList<Star> findStarInRectangleAndFilament(double longCenter, double latCenter, double base, double high){
+    public static ArrayList<Star> findStarInRectangleAndFilament(double longCenter, double latCenter, double base,
+                                                                 double high){
         Connection connection = null;
         Statement statement = null;
         ResultSet result;
@@ -306,7 +308,8 @@ public class StarRepository {
     @Parameter: center's longitude and latitude, rectangle's base and high
     @Return: HashMap built like <Key, Value> <---> <Type_of_star, number_of_stars_of_that_type>
      */
-    public static HashMap<String, Integer> findNumStarByTypeInRectangleAndFilament(double longCenter, double latCenter, double base, double high){
+    public static HashMap<String, Integer> findNumStarByTypeInRectangleAndFilament(double longCenter, double latCenter,
+                                                                                   double base, double high){
         Connection connection = null;
         Statement statement = null;
         ResultSet result;

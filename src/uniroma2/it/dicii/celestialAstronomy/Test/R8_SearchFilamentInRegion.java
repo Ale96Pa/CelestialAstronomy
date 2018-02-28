@@ -72,8 +72,6 @@ public class R8_SearchFilamentInRegion {
         Assert.assertTrue(esito);
     }
 
-
-
     /*
     Verify the execution of Exception in case of wrong input: side/radius = 0
      */

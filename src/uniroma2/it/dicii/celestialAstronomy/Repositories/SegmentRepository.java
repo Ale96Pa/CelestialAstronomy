@@ -201,7 +201,7 @@ public class SegmentRepository {
     }
 
     /*
-    Access to DB to find if a segment is present in DB; this method is used to avoid sending an error for the calculation
+    Access to DB to find if a segment is present in DB; this method is used to avoid sending error for the calculation
     of distance from backbone
     @Parameter: segment's ID
     @Return: true only if the segment is in DB

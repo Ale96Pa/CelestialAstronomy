@@ -1,7 +1,8 @@
 <%@ page import="uniroma2.it.dicii.celestialAstronomy.View.FilamentBean" %>
 <%@ page import="uniroma2.it.dicii.celestialAstronomy.Model.Filament" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="uniroma2.it.dicii.celestialAstronomy.Control.FilamentController" %><%--
+<%@ page import="uniroma2.it.dicii.celestialAstronomy.Control.FilamentController" %>
+<%--
   Created by IntelliJ IDEA.
   User: Alessandro
   Date: 20/02/2018

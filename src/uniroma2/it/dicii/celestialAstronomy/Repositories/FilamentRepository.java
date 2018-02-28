@@ -264,7 +264,8 @@ public class FilamentRepository {
     @ Parameter: percent of brillance, minimum ellipse, maximum ellipse
     @ Return: a list of Filaments that respect the features
      */
-    public static ArrayList<Filament> findFilamentByContrastAndEllipse(double percentBrillanza, double minEllipse, double maxEllipse, int offset) {
+    public static ArrayList<Filament> findFilamentByContrastAndEllipse(double percentBrillanza, double minEllipse,
+                                                                       double maxEllipse, int offset) {
         Connection connection = null;
         Statement statement = null;
         ResultSet result;
@@ -540,8 +541,8 @@ public class FilamentRepository {
     }
 
     /*
-    Access to DB to find if a filament is present in DB; this method is used to avoid sending an error for the calculation
-    of informations required
+    Access to DB to find if a filament is present in DB; this method is used to avoid sending error for the calculation
+    of information required
     @Parameter: filament's ID or Name
     @Return: true only if the filament is in DB
      */

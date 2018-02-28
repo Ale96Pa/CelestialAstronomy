@@ -82,7 +82,6 @@ public class R7_SearchFilamentByNumberSegments {
         }
     }
 
-
     /*
     Find filaments by number of segments based on data just inserted
      */
