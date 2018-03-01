@@ -488,9 +488,4 @@ public class FileRepository {
             }
         }
     }
-
-    public static void main(String args[]){
-        String path3 = CsvFileBean.getAbsolutePath()+"stelle_Herschel.csv";
-        insertStarFile(path3,0,0 ,"contorni_filamenti_Herschel.csv");
-    }
 }
