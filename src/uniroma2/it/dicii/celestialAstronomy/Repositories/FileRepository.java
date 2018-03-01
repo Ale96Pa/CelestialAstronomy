@@ -17,7 +17,6 @@ import static java.lang.Math.atan;
  */
 
 public class FileRepository {
-    private static String idfilamentospeciale;
     /*
     Insert in database data depending on file about perimeter
     Update the table "STRUTTURA GALATTICA"
@@ -292,7 +291,7 @@ public class FileRepository {
                         if(sick == offset+numRows)
                             break;
                     }
-                    statement.executeUpdate(insertUpdate);
+                    //statement.executeUpdate(insertUpdate);
 
                     /*
                     Update the table "INCLUSIONE" verifying given formula (REQ-FN-9)
@@ -309,6 +308,7 @@ public class FileRepository {
                     brPerimeter = new BufferedReader(new FileReader(pathnameFilament));
                     String linePerimeter;
                     int esitoPerimeter=0;
+
                     while((linePerimeter = brPerimeter.readLine()) != null) {
                         // String array of element of one tuple
                         CurrentTuplePerimeter = linePerimeter.split(cvsSplitter);
@@ -330,7 +330,17 @@ public class FileRepository {
                                             " VALUES ('" + BeforeFilamentID + "', '" + tupleStar[0] + "')" +
                                             " ON CONFLICT (filamento, stella) DO UPDATE " +
                                             " SET filamento = excluded.filamento, stella=excluded.stella";
-                                    statement.executeUpdate(insertUpdateInclusione);
+                                    if(sick!=0) {
+                                        if (numRows == 0) // all rows
+                                            statement.executeUpdate(insertUpdateInclusione);
+                                        else {
+                                            if (sick >= offset)
+                                                statement.executeUpdate(insertUpdateInclusione);
+                                            if (sick == offset + numRows)
+                                                break;
+                                        }
+                                    }
+                                    //statement.executeUpdate(insertUpdateInclusione);
                                     esitoInsert++;
                                 }
                                 sumValue=0;
@@ -362,7 +372,11 @@ public class FileRepository {
         return esitoInsert;
     }
 
-    public static int insertStarFile2(String pathnameStar, int numRows, int offset, String pathPerimeter){
+    /*
+    This methods insert the stars and update the table "inclusione" and it's adapted for the test-files
+     */
+    public static void insertStarFileForTest(String pathnameStar, int numRows, int offset){
+        String pathPerimeter = "testPerimeter";
         String pathnameFilament = CsvFileBean.getAbsolutePath()+pathPerimeter;
         Connection connection = null;
         Statement statement = null;
@@ -473,6 +487,10 @@ public class FileRepository {
                 e.printStackTrace();
             }
         }
-        return esitoInsert;
+    }
+
+    public static void main(String args[]){
+        String path3 = CsvFileBean.getAbsolutePath()+"stelle_Herschel.csv";
+        insertStarFile(path3,0,0 ,"contorni_filamenti_Herschel.csv");
     }
 }

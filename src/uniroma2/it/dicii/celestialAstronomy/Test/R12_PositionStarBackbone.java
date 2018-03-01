@@ -5,15 +5,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import uniroma2.it.dicii.celestialAstronomy.Control.FilamentController;
-import uniroma2.it.dicii.celestialAstronomy.Control.SegmentController;
 import uniroma2.it.dicii.celestialAstronomy.Model.Star;
 import uniroma2.it.dicii.celestialAstronomy.Repositories.FileRepository;
 import uniroma2.it.dicii.celestialAstronomy.Repositories.Utility.UtenteDao;
 import uniroma2.it.dicii.celestialAstronomy.View.CsvFileBean;
 import uniroma2.it.dicii.celestialAstronomy.View.FilamentBean;
-import uniroma2.it.dicii.celestialAstronomy.View.SegmentBean;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -41,7 +38,7 @@ public class R12_PositionStarBackbone {
         FileRepository.insertSkeletonFile(path3,0,0);
 
         String path4 = CsvFileBean.getAbsolutePath()+"testStar";
-        FileRepository.insertStarFile2(path4, 0, 0, "testPerimeter");
+        FileRepository.insertStarFileForTest(path4, 0, 0);
     }
 
     /*

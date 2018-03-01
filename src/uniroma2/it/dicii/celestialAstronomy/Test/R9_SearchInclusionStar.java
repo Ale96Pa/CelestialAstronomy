@@ -34,7 +34,7 @@ public class R9_SearchInclusionStar {
         FileRepository.insertPerimeterFile(path2,4,13);
 
         String path3 = CsvFileBean.getAbsolutePath()+"testStar";
-        FileRepository.insertStarFile2(path3,0,0 ,"testPerimeter");
+        FileRepository.insertStarFileForTest(path3,0,0);
     }
 
     /*
