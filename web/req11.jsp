@@ -62,17 +62,24 @@
         </h3></U></I></p> <%
     }else {
         ArrayList<Double> distances = SegmentController.findDistanceOfSegment(segmentBean);
-        %> <table border="2">
-            <tr>
-                <th>ID </th>
-                <th>Distance of minimum vertex </th>
-                <th>Distance of maximum vertex </th>
-            </tr>
-            <tr>
-                <td> <% out.print(segmentBean.getID()); %> </td>
-                <td> <% out.print(distances.get(0) ); %> </td>
-                <td> <% out.print(distances.get(1)); %> </td>
-            </tr>
-        </table> <%
+        if(distances.size() == 0){
+            %><p class="text-info"> <I><U><h3>
+            <span style="color: red; ">  Not filament found that include the inserted ID!  </span>
+            </h3></U></I></p> <%
+        }
+        else{
+            %> <table border="2">
+                <tr>
+                    <th>ID </th>
+                    <th>Distance of minimum vertex </th>
+                    <th>Distance of maximum vertex </th>
+                </tr>
+                <tr>
+                    <td> <% out.print(segmentBean.getID()); %> </td>
+                    <td> <% out.print(distances.get(0)); %> </td>
+                    <td> <% out.print(distances.get(1)); %> </td>
+                </tr>
+            </table> <%
+        }
     }
 }%>
