@@ -7,3 +7,5 @@ Database project
 Course: Basi di dati e conoscenza
 
 University: Universita' di Roma "Tor Vergata"
+
+Team: 2 people
